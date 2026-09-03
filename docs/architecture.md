@@ -20,7 +20,7 @@ Visitante ----------------> Next.js (web/) ---> Vercel (fase posterior)
 - **`web/`** — Next.js App Router, React, TypeScript estrito e Tailwind CSS. Server Components por omissão. Usa `@sanity/client` apenas para ler conteúdo publicado.
 - **`studio/`** — Sanity Studio, TypeScript, Structure Tool e localização pt-PT. Está configurado para o projeto existente `n3esjk8x` e dataset público `production`.
 - **GitHub** — controlo de versões e revisão técnica sob a conta do programador.
-- **Vercel** — alojamento futuro apenas da aplicação `web/`, através da integração Git nativa. Não está configurado nesta fase.
+- **Vercel** — alojamento ativo da aplicação `web/`, através da integração Git nativa com a branch de produção `main`.
 - **Sanity-managed hosting** — alojamento futuro do Studio. Não há deployment nesta fase.
 
 ## Decisões de fronteira
