@@ -1,44 +1,59 @@
 @import 'tailwindcss';
 
 :root {
-  --foundation-canvas: #ffffff;
-  --foundation-surface: #f4f4f3;
-  --foundation-ink: #202124;
-  --foundation-muted: #5f6368;
-  --foundation-border: #d7d8da;
-
-  /*
-   * Temporary monochrome aliases. Replace only after official brand colours
-   * are confirmed; these values are not an interpretation of the mockup.
-   */
-  --brand-navy: var(--foundation-ink);
-  --brand-gold: var(--foundation-ink);
-  --brand-white: var(--foundation-canvas);
-  --emergency-red: var(--foundation-ink);
+  /* Palette inferred from the approved visual direction; adjustable when formal brand guidance is supplied. */
+  --brand-navy: #09233d;
+  --brand-navy-dark: #05172a;
+  --brand-gold: #c9a24e;
+  --brand-gold-light: #ead295;
+  --brand-gold-dark: #8b6827;
+  --brand-gold-pale: #f5eddc;
+  --brand-white: #ffffff;
+  --neutral-background: #f5f4f1;
+  --neutral-surface: #ffffff;
+  --neutral-text: #243140;
+  --muted-text: #64707d;
+  --neutral-border: #d9dde1;
+  --emergency-red: #c52b2f;
+  --emergency-red-hover: #9f2024;
 }
 
 @theme inline {
   --color-brand-navy: var(--brand-navy);
+  --color-brand-navy-dark: var(--brand-navy-dark);
   --color-brand-gold: var(--brand-gold);
+  --color-brand-gold-light: var(--brand-gold-light);
+  --color-brand-gold-dark: var(--brand-gold-dark);
+  --color-brand-gold-pale: var(--brand-gold-pale);
   --color-brand-white: var(--brand-white);
+  --color-neutral-background: var(--neutral-background);
+  --color-neutral-surface: var(--neutral-surface);
+  --color-neutral-text: var(--neutral-text);
+  --color-muted-text: var(--muted-text);
+  --color-neutral-border: var(--neutral-border);
   --color-emergency-red: var(--emergency-red);
+  --color-emergency-red-hover: var(--emergency-red-hover);
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-heading);
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--neutral-background); }
+body { margin: 0; background: var(--neutral-background); color: var(--neutral-text); font-family: var(--font-body), Arial, sans-serif; }
+h1, h2, h3, h4 { font-family: var(--font-heading), Arial, sans-serif; }
+button, a { -webkit-tap-highlight-color: transparent; }
+::selection { background: var(--brand-gold-light); color: var(--brand-navy-dark); }
 
-html {
-  background: var(--foundation-canvas);
-}
+.container-site { width: min(100% - 2rem, 76rem); margin-inline: auto; }
+.section-space { padding-block: clamp(4rem, 7vw, 7rem); }
+.section-label { color: var(--brand-gold-dark); font-size: .75rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+.section-title { color: var(--brand-navy); font-size: clamp(2rem, 4vw, 3.25rem); font-weight: 800; letter-spacing: -.025em; line-height: 1.05; }
+.footer-title { margin-bottom: 1rem; color: var(--brand-gold-light); font-size: .75rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
 
-body {
-  margin: 0;
-  background: var(--foundation-canvas);
-  color: var(--foundation-ink);
-  font-family: Arial, Helvetica, sans-serif;
-}
+.skip-link { position: fixed; left: 1rem; top: -5rem; z-index: 100; background: white; color: var(--brand-navy); padding: .75rem 1rem; font-weight: 800; box-shadow: 0 10px 30px rgb(0 0 0 / .25); }
+.skip-link:focus { top: 1rem; outline: 3px solid var(--brand-gold); }
 
-a {
-  color: inherit;
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }

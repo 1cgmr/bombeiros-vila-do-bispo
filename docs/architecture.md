@@ -33,7 +33,9 @@ Visitante ----------------------> Next.js (web/) ---> Vercel
 - Rascunhos, visual editing, Presentation Tool e revalidação por webhook ficam para fases posteriores.
 - Formulários, email e anti-spam não pertencem a esta fase. Quando forem implementados, os dados pessoais não serão guardados no dataset público.
 - O WordPress referido na proposta está explicitamente substituído por Next.js + Sanity; mantém-se apenas o requisito de autonomia editorial.
-- Os valores cromáticos da identidade ainda não estão fixados. Os tokens semânticos existem, mas usam uma base visual neutra até serem confirmadas normas oficiais.
+- A interface pública usa tokens semânticos navy, dourado, branco, neutros e vermelho de emergência, inferidos da direção visual aprovada. Estes valores podem ser afinados quando forem fornecidas normas formais de identidade.
+- O layout público é mobile-first, usa Server Components por omissão e restringe JavaScript do cliente ao menu móvel.
+- A geração de imagens usa o helper oficial do Sanity e a otimização do Next.js; Portable Text é renderizado por uma lista fechada de componentes acessíveis.
 
 ## Custo
 

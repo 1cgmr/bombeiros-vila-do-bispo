@@ -1396,6 +1396,24 @@ export type TRAINING_QUERY_RESULT = Array<{
   seo: Seo | null;
 }>;
 
+// Source: ../web/src/sanity/queries/training.ts
+// Variable: TRAINING_BY_SLUG_QUERY
+// Query: *[_type == "training" && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    summary,    description,    startDate,    endDate,    location,    audience,    enrollmentInformation,    status,    seo  }
+export type TRAINING_BY_SLUG_QUERY_RESULT = {
+  _id: string;
+  title: string;
+  slug: string;
+  summary: string;
+  description: PortableText;
+  startDate: string | null;
+  endDate: string | null;
+  location: string | null;
+  audience: string | null;
+  enrollmentInformation: PortableText | null;
+  status: "cancelled" | "closed" | "completed" | "open" | "planned";
+  seo: Seo | null;
+} | null;
+
 // Source: ../web/src/sanity/queries/vehicles.ts
 // Variable: VEHICLES_QUERY
 // Query: *[_type == "vehicle"] | order(coalesce(displayOrder, 9999) asc, designation asc){    _id,    designation,    category,    otherCategory,    mainImage{      asset->{_id, url, metadata{dimensions, lqip}},      alt,      decorative,      caption,      credit,      crop,      hotspot    },    publicDescription,    "publicSpecifications": select(      specificationsApprovedForPublication == true => publicSpecifications    ),    gallery[]{      _key,      image{        asset->{_id, url, metadata{dimensions, lqip}},        alt,        decorative,        caption,        credit,        crop,        hotspot      }    },    displayOrder  }
@@ -1471,6 +1489,7 @@ declare global {
     '\n  *[_type == "service" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    visualType,\n    image{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    icon,\n    content,\n    availabilityInformation,\n    contactChannels[authorizedForPublication == true]{\n      _key,\n      label,\n      channelType,\n      value,\n      description\n    },\n    seo\n  }\n': SERVICE_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "siteSettings" && _id == "siteSettings"][0]{\n    _id,\n    _type,\n    officialName,\n    shortName,\n    institutionalDescription,\n    logo{\n      asset->{\n        _id,\n        url,\n        metadata{dimensions, lqip}\n      },\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    siteUrl,\n    defaultSeo{\n      metaTitle,\n      metaDescription,\n      noIndex,\n      openGraphImage{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      }\n    }\n  }\n': SITE_SETTINGS_QUERY_RESULT;
     '\n  *[_type == "training"] | order(coalesce(startDate, "9999-12-31T23:59:59Z") asc, title asc){\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    description,\n    startDate,\n    endDate,\n    location,\n    audience,\n    enrollmentInformation,\n    status,\n    seo\n  }\n': TRAINING_QUERY_RESULT;
+    '\n  *[_type == "training" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    description,\n    startDate,\n    endDate,\n    location,\n    audience,\n    enrollmentInformation,\n    status,\n    seo\n  }\n': TRAINING_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "vehicle"] | order(coalesce(displayOrder, 9999) asc, designation asc){\n    _id,\n    designation,\n    category,\n    otherCategory,\n    mainImage{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    publicDescription,\n    "publicSpecifications": select(\n      specificationsApprovedForPublication == true => publicSpecifications\n    ),\n    gallery[]{\n      _key,\n      image{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      }\n    },\n    displayOrder\n  }\n': VEHICLES_QUERY_RESULT;
   }
 }
