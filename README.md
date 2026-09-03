@@ -2,14 +2,14 @@
 
 Fundação técnica do website institucional da Associação Humanitária dos Bombeiros Voluntários de Vila do Bispo. O projeto é voluntário, não comercial e deve manter um custo recorrente de software e alojamento de **0 €/mês** (o domínio fica fora desta restrição).
 
-> Estado: fundação técnica. As páginas finais, o design, os formulários e os conteúdos institucionais ainda não estão implementados.
+> Estado: modelo editorial e camada de consultas concluídos. As páginas finais, o design, os formulários e os conteúdos institucionais ainda não estão implementados.
 
 ## Arquitetura
 
 O repositório contém duas aplicações npm independentes:
 
 - `web/`: Next.js com App Router, React, TypeScript estrito e Tailwind CSS. Lê conteúdo publicado do Sanity sem token privado.
-- `studio/`: Sanity Studio em TypeScript, ligado ao projeto institucional existente e preparado para edição em português europeu.
+- `studio/`: Sanity Studio em TypeScript, ligado ao projeto institucional existente, com edição em português europeu e alojado pelo Sanity.
 
 O Sanity Content Lake é a fonte de verdade para conteúdo institucional editável. A Associação edita e publica esse conteúdo através do Sanity Studio; a publicação normal de conteúdo não exige GitHub, alterações ao código, uma nova compilação do Studio ou intervenção do programador. GitHub e o futuro projeto Vercel permanecem infraestrutura técnica do programador.
 
@@ -62,8 +62,14 @@ npm run dev
 npm run lint
 npm run typecheck
 npm run schema:validate
+npm run typegen
+npm run typegen:watch
 npm run build
 ```
+
+O Studio alojado está disponível em [https://bombeiros-vila-do-bispo.sanity.studio](https://bombeiros-vila-do-bispo.sanity.studio). O acesso exige uma conta autorizada no projeto institucional.
+
+`npm run typegen` extrai o schema e recria `web/src/sanity/sanity.types.ts` a partir das consultas GROQ. Execute-o depois de alterar schemas ou consultas e inclua o ficheiro gerado no mesmo commit.
 
 ## Configuração Sanity existente
 
@@ -74,6 +80,8 @@ Estes identificadores são públicos e não são segredos:
 - organização: `ooc17hxso`
 
 O projeto e o dataset já existem. Não devem ser recriados.
+
+Os editores criam, editam e publicam conteúdo no Studio alojado. Este trabalho editorial normal não requer Git, GitHub, Codex, Vercel nem um novo deployment do Studio. Apenas alterações ao schema ou à interface editorial exigem alterações ao código e novo deployment do Studio.
 
 ## Variáveis de ambiente
 
@@ -92,3 +100,9 @@ O ficheiro `.env.local` é ignorado pelo Git. Não existem tokens Sanity nesta f
 - `docs/reference/WhatsApp Image 2026-09-02 at 13.54.52.jpeg`: direção visual apenas; os dados, imagens e contactos apresentados não são considerados factos validados.
 
 Todo o conteúdo oficial deve ser confirmado pela Direção/Comando antes de ser publicado. Consulte [docs/official-content-checklist.md](docs/official-content-checklist.md).
+
+Consulte ainda:
+
+- [docs/deployment-runbook.md](docs/deployment-runbook.md) para login, publicação de conteúdo e deployments;
+- [docs/frontend-content.md](docs/frontend-content.md) para consultas, tipos gerados e comportamento sem conteúdo;
+- [docs/dependency-notes.md](docs/dependency-notes.md) para o estado conhecido das auditorias npm.

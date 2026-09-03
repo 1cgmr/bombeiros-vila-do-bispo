@@ -12,7 +12,10 @@
     "build": "sanity build",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
-    "schema:validate": "sanity schema extract --path .sanity/schema.json"
+    "schema:extract": "sanity schema extract --path .sanity/schema.json --enforce-required-fields --force",
+    "schema:validate": "npm run schema:extract",
+    "typegen": "npm run schema:extract && sanity typegen generate",
+    "typegen:watch": "npm run schema:extract && sanity typegen generate --watch"
   },
   "dependencies": {
     "@sanity/locale-pt-pt": "1.1.37",

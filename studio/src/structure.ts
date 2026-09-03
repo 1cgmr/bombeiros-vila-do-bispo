@@ -70,6 +70,7 @@ export const structure: StructureResolver = (S) => {
                     .id('commandDocuments')
                     .title('Comando')
                     .filter('_type == "governingBody" && bodyType == "command"')
+                    .apiVersion('2026-09-01')
                     .initialValueTemplates([
                       S.initialValueTemplateItem('command-governing-body'),
                     ]),
@@ -85,6 +86,7 @@ export const structure: StructureResolver = (S) => {
                     .filter(
                       '_type == "governingBody" && bodyType == "governingBody"',
                     )
+                    .apiVersion('2026-09-01')
                     .initialValueTemplates([
                       S.initialValueTemplateItem('social-governing-body'),
                     ]),
