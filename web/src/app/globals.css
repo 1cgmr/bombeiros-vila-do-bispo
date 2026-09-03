@@ -1,0 +1,44 @@
+@import 'tailwindcss';
+
+:root {
+  --foundation-canvas: #ffffff;
+  --foundation-surface: #f4f4f3;
+  --foundation-ink: #202124;
+  --foundation-muted: #5f6368;
+  --foundation-border: #d7d8da;
+
+  /*
+   * Temporary monochrome aliases. Replace only after official brand colours
+   * are confirmed; these values are not an interpretation of the mockup.
+   */
+  --brand-navy: var(--foundation-ink);
+  --brand-gold: var(--foundation-ink);
+  --brand-white: var(--foundation-canvas);
+  --emergency-red: var(--foundation-ink);
+}
+
+@theme inline {
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-white: var(--brand-white);
+  --color-emergency-red: var(--emergency-red);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--foundation-canvas);
+}
+
+body {
+  margin: 0;
+  background: var(--foundation-canvas);
+  color: var(--foundation-ink);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: inherit;
+}
