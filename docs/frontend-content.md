@@ -11,7 +11,7 @@ As consultas GROQ e as funções de acesso ficam em `web/src/sanity/queries/`, s
 - `recruitment.ts`, `membership.ts`, `donations.ts` e `contact.ts`;
 - `partners.ts` e `governance.ts`.
 
-Os componentes e páginas futuros devem chamar estas funções diretamente. A cadeia intencional é:
+Os componentes e páginas públicas chamam estas funções diretamente. A cadeia intencional é:
 
 ```text
 componente ou página
@@ -40,7 +40,7 @@ Alguns dados exigem confirmação editorial antes de serem devolvidos:
 
 ## Tipos gerados
 
-O TypeGen oficial lê os schemas do Studio e as 20 consultas definidas com `defineQuery`. O resultado versionado é `web/src/sanity/sanity.types.ts`; a sobrecarga gerada do cliente infere automaticamente o resultado de cada `fetch`.
+O TypeGen oficial lê os schemas do Studio e as consultas definidas com `defineQuery`. O resultado versionado é `web/src/sanity/sanity.types.ts`; a sobrecarga gerada do cliente infere automaticamente o resultado de cada `fetch`.
 
 Regenerar depois de alterar schemas ou consultas:
 
@@ -60,4 +60,18 @@ As consultas de documentos únicos e detalhes devolvem `null` quando o conteúdo
 - ausência de artigos, serviços, viaturas, formações ou galerias;
 - referências opcionais ou imagens em falta.
 
-Os componentes futuros devem omitir secções ou mostrar estados técnicos neutros. Nunca devem inventar contactos, datas, nomes, números, regras ou outros factos institucionais como fallback.
+Os componentes omitem secções opcionais vazias ou mostram estados públicos neutros nas páginas em que a ausência de conteúdo precisa de ser explicada. Nunca inventam contactos, datas, nomes, números, regras ou outros factos institucionais como fallback.
+
+## Camada pública
+
+O App Router implementa a navegação institucional completa em `web/src/app/`. A homepage combina `homepage`, serviços, notícias e contactos publicados. Os componentes reutilizáveis de conteúdo e layout ficam em `web/src/components/`; os utilitários de navegação, metadata e normalização segura ficam em `web/src/lib/`.
+
+- `PortableTextRenderer` aceita apenas os tipos previstos no schema e ignora tipos desconhecidos; ligações externas usam `noopener noreferrer`.
+- `SanityImage` aplica crop/hotspot, dimensões responsivas, texto alternativo editorial e carregamento prioritário apenas na imagem principal da homepage.
+- `buildMetadata` aplica SEO editorial, `noIndex`, Open Graph e canonical quando existe um URL base válido.
+- `sitemap.ts` combina rotas fixas com slugs publicados; `robots.ts` bloqueia indexação em Vercel Preview.
+- A navegação é estrutural e permanece disponível mesmo quando o CMS está vazio.
+
+As rotas de detalhe devolvem 404 para slugs inexistentes. A homepage esconde estatísticas, serviços, missão, notícias e contactos normais quando não existe informação publicada para essas áreas.
+
+O layout define revalidação incremental a cada cinco minutos. Assim, a publicação normal no Studio atualiza o site sem alteração de código nem novo deployment; pode existir um atraso curto devido ao CDN e ao ciclo de revalidação.
