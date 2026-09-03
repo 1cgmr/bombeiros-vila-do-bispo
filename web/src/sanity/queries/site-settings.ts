@@ -1,17 +1,45 @@
+import {defineQuery} from 'groq'
+
 import {sanityClient} from '../client'
 
-export type SiteSettings = {
-  officialName?: string
-  shortName?: string
-}
-
-export const siteSettingsQuery = `
+export const SITE_SETTINGS_QUERY = defineQuery(`
   *[_type == "siteSettings" && _id == "siteSettings"][0]{
+    _id,
+    _type,
     officialName,
-    shortName
+    shortName,
+    institutionalDescription,
+    logo{
+      asset->{
+        _id,
+        url,
+        metadata{dimensions, lqip}
+      },
+      alt,
+      decorative,
+      caption,
+      credit,
+      crop,
+      hotspot
+    },
+    siteUrl,
+    defaultSeo{
+      metaTitle,
+      metaDescription,
+      noIndex,
+      openGraphImage{
+        asset->{_id, url, metadata{dimensions, lqip}},
+        alt,
+        decorative,
+        caption,
+        credit,
+        crop,
+        hotspot
+      }
+    }
   }
-`
+`)
 
-export async function getSiteSettings(): Promise<SiteSettings | null> {
-  return sanityClient.fetch<SiteSettings | null>(siteSettingsQuery)
+export function getSiteSettings() {
+  return sanityClient.fetch(SITE_SETTINGS_QUERY)
 }

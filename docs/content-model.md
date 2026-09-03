@@ -12,6 +12,8 @@
 
 Cada singleton tem um ID estável igual ao respetivo tipo, abre diretamente no Studio e não pode ser criado de forma genérica, duplicado, eliminado ou despublicado.
 
+Os documentos não são semeados automaticamente. Abrir uma entrada fixa no Studio apresenta o formulário associado ao ID estável; o rascunho só é criado quando o editor efetua uma alteração. As validações impedem a publicação de documentos obrigatórios vazios. Na conclusão do rollout inicial não foi criado nem publicado qualquer documento fixo.
+
 | Tipo / ID | Etiqueta | Finalidade e campos principais |
 | --- | --- | --- |
 | `siteSettings` | Configurações do Site | Nome oficial/curto, descrição institucional, logótipo acessível, URL oficial e SEO por omissão. |
