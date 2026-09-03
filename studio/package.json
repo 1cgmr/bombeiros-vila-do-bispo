@@ -1,0 +1,32 @@
+{
+  "name": "bombeiros-vila-do-bispo-studio",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=24.0.0 <25",
+    "npm": ">=10"
+  },
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity start",
+    "build": "sanity build",
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "schema:validate": "sanity schema extract --path .sanity/schema.json"
+  },
+  "dependencies": {
+    "@sanity/locale-pt-pt": "1.1.37",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "sanity": "6.12.0",
+    "styled-components": "6.5.3"
+  },
+  "devDependencies": {
+    "@sanity/eslint-config-studio": "7.0.0",
+    "@types/node": "24.13.3",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "eslint": "10.9.1",
+    "typescript": "6.0.3"
+  }
+}
