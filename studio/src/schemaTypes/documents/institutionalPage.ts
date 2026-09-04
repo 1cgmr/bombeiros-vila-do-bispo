@@ -64,13 +64,13 @@ export const institutionalPage = defineType({
     prepare: ({ title, subtitle, media }) => ({
       title: title || 'Página institucional sem título',
       subtitle:
-        subtitle === 'institutionalPage.association'
+        subtitle === 'institutional-page-association'
           ? 'Associação'
-          : subtitle === 'institutionalPage.fireBrigade'
+          : subtitle === 'institutional-page-fire-brigade'
             ? 'Corpo de Bombeiros'
-            : subtitle === 'institutionalPage.privacyPolicy'
+            : subtitle === 'institutional-page-privacy-policy'
               ? 'Política de Privacidade'
-              : subtitle === 'institutionalPage.accessibilityStatement'
+              : subtitle === 'institutional-page-accessibility-statement'
                 ? 'Declaração de Acessibilidade'
                 : 'Página institucional controlada',
       media,

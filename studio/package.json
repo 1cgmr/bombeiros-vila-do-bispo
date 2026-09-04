@@ -12,6 +12,8 @@
     "build": "sanity build",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
+    "content:initial:dry-run": "sanity exec scripts/populate-initial-content.ts --with-user-token -- --dry-run",
+    "content:initial:apply": "sanity exec scripts/populate-initial-content.ts --with-user-token -- --apply",
     "schema:extract": "sanity schema extract --path .sanity/schema.json --enforce-required-fields --force",
     "schema:validate": "npm run schema:extract",
     "typegen": "npm run schema:extract && sanity typegen generate",

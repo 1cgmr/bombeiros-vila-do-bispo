@@ -3,10 +3,10 @@ import {defineQuery} from 'groq'
 import {sanityClient} from '../client'
 
 export const institutionalPageIds = {
-  association: 'institutionalPage.association',
-  fireBrigade: 'institutionalPage.fireBrigade',
-  privacyPolicy: 'institutionalPage.privacyPolicy',
-  accessibilityStatement: 'institutionalPage.accessibilityStatement',
+  association: 'institutional-page-association',
+  fireBrigade: 'institutional-page-fire-brigade',
+  privacyPolicy: 'institutional-page-privacy-policy',
+  accessibilityStatement: 'institutional-page-accessibility-statement',
 } as const
 
 export type InstitutionalPageKey = keyof typeof institutionalPageIds
