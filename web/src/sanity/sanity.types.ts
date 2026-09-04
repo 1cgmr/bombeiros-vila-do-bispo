@@ -179,6 +179,17 @@ export type Training = {
   seo?: Seo;
 };
 
+export type TrainingInformation = {
+  _id: string;
+  _type: "trainingInformation";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  introduction: PortableText;
+  body?: PortableText;
+  seo?: Seo;
+};
+
 export type Vehicle = {
   _id: string;
   _type: "vehicle";
@@ -269,6 +280,14 @@ export type NewsArticle = {
   slug: Slug;
   excerpt: string;
   mainImage?: AccessibleImage;
+  fallbackVisual?:
+    | "vehicle"
+    | "fire"
+    | "community"
+    | "transport"
+    | "training"
+    | "institutional"
+    | "general";
   body: PortableText;
   publicationDate: string;
   categories: Array<
@@ -679,6 +698,7 @@ export type AllSanitySchemaTypes =
   | Seo
   | Slug
   | Training
+  | TrainingInformation
   | Vehicle
   | Service
   | NewsCategory
@@ -1103,13 +1123,22 @@ export type MEMBERSHIP_INFORMATION_QUERY_RESULT = {
 
 // Source: ../web/src/sanity/queries/news.ts
 // Variable: NEWS_ARTICLES_QUERY
-// Query: *[_type == "newsArticle" && publicationDate <= now()]    | order(publicationDate desc) [0...$limit]{      _id,      title,      "slug": slug.current,      excerpt,      publicationDate,      mainImage{        asset->{_id, url, metadata{dimensions, lqip}},        alt,        decorative,        caption,        credit,        crop,        hotspot      },      categories[]->{_id, name, "slug": slug.current}    }
+// Query: *[_type == "newsArticle" && publicationDate <= now()]    | order(publicationDate desc) [0...$limit]{      _id,      title,      "slug": slug.current,      excerpt,      publicationDate,      fallbackVisual,      mainImage{        asset->{_id, url, metadata{dimensions, lqip}},        alt,        decorative,        caption,        credit,        crop,        hotspot      },      categories[]->{_id, name, "slug": slug.current}    }
 export type NEWS_ARTICLES_QUERY_RESULT = Array<{
   _id: string;
   title: string;
   slug: string;
   excerpt: string;
   publicationDate: string;
+  fallbackVisual:
+    | "community"
+    | "fire"
+    | "general"
+    | "institutional"
+    | "training"
+    | "transport"
+    | "vehicle"
+    | null;
   mainImage: {
     asset: {
       _id: string;
@@ -1135,13 +1164,22 @@ export type NEWS_ARTICLES_QUERY_RESULT = Array<{
 
 // Source: ../web/src/sanity/queries/news.ts
 // Variable: NEWS_ARTICLE_BY_SLUG_QUERY
-// Query: *[_type == "newsArticle" && slug.current == $slug && publicationDate <= now()][0]{    _id,    title,    "slug": slug.current,    excerpt,    publicationDate,    mainImage{      asset->{_id, url, metadata{dimensions, lqip}},      alt,      decorative,      caption,      credit,      crop,      hotspot    },    body,    categories[]->{_id, name, "slug": slug.current},    author->{      _id,      publicName,      photograph{        asset->{_id, url, metadata{dimensions, lqip}},        alt,        decorative,        caption,        credit,        crop,        hotspot      }    },    seo  }
+// Query: *[_type == "newsArticle" && slug.current == $slug && publicationDate <= now()][0]{    _id,    title,    "slug": slug.current,    excerpt,    publicationDate,    fallbackVisual,    mainImage{      asset->{_id, url, metadata{dimensions, lqip}},      alt,      decorative,      caption,      credit,      crop,      hotspot    },    body,    categories[]->{_id, name, "slug": slug.current},    author->{      _id,      publicName,      photograph{        asset->{_id, url, metadata{dimensions, lqip}},        alt,        decorative,        caption,        credit,        crop,        hotspot      }    },    seo  }
 export type NEWS_ARTICLE_BY_SLUG_QUERY_RESULT = {
   _id: string;
   title: string;
   slug: string;
   excerpt: string;
   publicationDate: string;
+  fallbackVisual:
+    | "community"
+    | "fire"
+    | "general"
+    | "institutional"
+    | "training"
+    | "transport"
+    | "vehicle"
+    | null;
   mainImage: {
     asset: {
       _id: string;
@@ -1379,6 +1417,16 @@ export type SITE_SETTINGS_QUERY_RESULT = {
 } | null;
 
 // Source: ../web/src/sanity/queries/training.ts
+// Variable: TRAINING_INFORMATION_QUERY
+// Query: *[_type == "trainingInformation" && _id == "trainingInformation"][0]{    _id,    introduction,    body,    seo  }
+export type TRAINING_INFORMATION_QUERY_RESULT = {
+  _id: "trainingInformation";
+  introduction: PortableText;
+  body: PortableText | null;
+  seo: Seo | null;
+} | null;
+
+// Source: ../web/src/sanity/queries/training.ts
 // Variable: TRAINING_QUERY
 // Query: *[_type == "training"] | order(coalesce(startDate, "9999-12-31T23:59:59Z") asc, title asc){    _id,    title,    "slug": slug.current,    summary,    description,    startDate,    endDate,    location,    audience,    enrollmentInformation,    status,    seo  }
 export type TRAINING_QUERY_RESULT = Array<{
@@ -1480,14 +1528,15 @@ declare global {
     '\n  *[_type == "institutionalDocument"] | order(date desc, title asc){\n    _id,\n    title,\n    category,\n    date,\n    reference,\n    accessibleSummary,\n    "file": file.asset->{_id, url, originalFilename, mimeType, size}\n  }\n': INSTITUTIONAL_DOCUMENTS_QUERY_RESULT;
     '\n  *[_type == "institutionalPage" && _id == $documentId][0]{\n    _id,\n    title,\n    introduction,\n    featuredImage{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    body,\n    documents[]->{\n      _id,\n      title,\n      category,\n      date,\n      reference,\n      accessibleSummary,\n      "file": file.asset->{_id, url, originalFilename, mimeType, size}\n    },\n    seo\n  }\n': INSTITUTIONAL_PAGE_QUERY_RESULT;
     '\n  *[_type == "membershipInformation" && _id == "membershipInformation"][0]{\n    _id,\n    introduction,\n    eligibility,\n    benefits,\n    process[]{_key, title, description},\n    "fees": select(feesConfirmedForPublication == true => fees),\n    faq[]{_key, question, answer},\n    futureFormIntroduction,\n    seo\n  }\n': MEMBERSHIP_INFORMATION_QUERY_RESULT;
-    '\n  *[_type == "newsArticle" && publicationDate <= now()]\n    | order(publicationDate desc) [0...$limit]{\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt,\n      publicationDate,\n      mainImage{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      },\n      categories[]->{_id, name, "slug": slug.current}\n    }\n': NEWS_ARTICLES_QUERY_RESULT;
-    '\n  *[_type == "newsArticle" && slug.current == $slug && publicationDate <= now()][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    publicationDate,\n    mainImage{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    body,\n    categories[]->{_id, name, "slug": slug.current},\n    author->{\n      _id,\n      publicName,\n      photograph{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      }\n    },\n    seo\n  }\n': NEWS_ARTICLE_BY_SLUG_QUERY_RESULT;
+    '\n  *[_type == "newsArticle" && publicationDate <= now()]\n    | order(publicationDate desc) [0...$limit]{\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt,\n      publicationDate,\n      fallbackVisual,\n      mainImage{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      },\n      categories[]->{_id, name, "slug": slug.current}\n    }\n': NEWS_ARTICLES_QUERY_RESULT;
+    '\n  *[_type == "newsArticle" && slug.current == $slug && publicationDate <= now()][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    publicationDate,\n    fallbackVisual,\n    mainImage{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    body,\n    categories[]->{_id, name, "slug": slug.current},\n    author->{\n      _id,\n      publicName,\n      photograph{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      }\n    },\n    seo\n  }\n': NEWS_ARTICLE_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "newsCategory"] | order(name asc){\n    _id,\n    name,\n    "slug": slug.current,\n    description\n  }\n': NEWS_CATEGORIES_QUERY_RESULT;
     '\n  *[_type == "partner" && active == true]\n    | order(coalesce(displayOrder, 9999) asc, name asc){\n      _id,\n      name,\n      logo{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      },\n      website,\n      description,\n      displayOrder\n    }\n': PARTNERS_QUERY_RESULT;
     '\n  *[_type == "recruitmentInformation" && _id == "recruitmentInformation"][0]{\n    _id,\n    introduction,\n    eligibility,\n    requirements,\n    stages[]{_key, title, description},\n    expectations,\n    faq[]{_key, question, answer},\n    futureFormIntroduction,\n    privacySummary,\n    seo\n  }\n': RECRUITMENT_INFORMATION_QUERY_RESULT;
     '\n  *[_type == "service"] | order(coalesce(displayOrder, 9999) asc, title asc){\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    visualType,\n    image{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    icon,\n    displayOrder\n  }\n': SERVICES_QUERY_RESULT;
     '\n  *[_type == "service" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    visualType,\n    image{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    icon,\n    content,\n    availabilityInformation,\n    contactChannels[authorizedForPublication == true]{\n      _key,\n      label,\n      channelType,\n      value,\n      description\n    },\n    seo\n  }\n': SERVICE_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "siteSettings" && _id == "siteSettings"][0]{\n    _id,\n    _type,\n    officialName,\n    shortName,\n    institutionalDescription,\n    logo{\n      asset->{\n        _id,\n        url,\n        metadata{dimensions, lqip}\n      },\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    siteUrl,\n    defaultSeo{\n      metaTitle,\n      metaDescription,\n      noIndex,\n      openGraphImage{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      }\n    }\n  }\n': SITE_SETTINGS_QUERY_RESULT;
+    '\n  *[_type == "trainingInformation" && _id == "trainingInformation"][0]{\n    _id,\n    introduction,\n    body,\n    seo\n  }\n': TRAINING_INFORMATION_QUERY_RESULT;
     '\n  *[_type == "training"] | order(coalesce(startDate, "9999-12-31T23:59:59Z") asc, title asc){\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    description,\n    startDate,\n    endDate,\n    location,\n    audience,\n    enrollmentInformation,\n    status,\n    seo\n  }\n': TRAINING_QUERY_RESULT;
     '\n  *[_type == "training" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    description,\n    startDate,\n    endDate,\n    location,\n    audience,\n    enrollmentInformation,\n    status,\n    seo\n  }\n': TRAINING_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "vehicle"] | order(coalesce(displayOrder, 9999) asc, designation asc){\n    _id,\n    designation,\n    category,\n    otherCategory,\n    mainImage{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    publicDescription,\n    "publicSpecifications": select(\n      specificationsApprovedForPublication == true => publicSpecifications\n    ),\n    gallery[]{\n      _key,\n      image{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      }\n    },\n    displayOrder\n  }\n': VEHICLES_QUERY_RESULT;

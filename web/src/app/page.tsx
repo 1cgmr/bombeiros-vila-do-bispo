@@ -53,14 +53,14 @@ export default async function Home() {
         <div className="container-site flex min-h-[39rem] items-center py-20 sm:min-h-[43rem]">
           <div className="max-w-3xl">
             <p className="mb-5 text-xs font-extrabold uppercase tracking-[.22em] text-brand-gold-light">Associação Humanitária</p>
-            <h1 className="text-4xl font-black leading-[1.04] tracking-tight text-balance sm:text-6xl lg:text-7xl">
+            <h1 className="text-3xl font-black leading-[1.04] tracking-tight text-balance min-[420px]:text-4xl sm:text-6xl lg:text-7xl">
               {hero?.headline ? <HighlightedHeadline headline={hero.headline} highlightedFragment={hero.highlightedFragment} /> : 'Bombeiros Voluntários de Vila do Bispo'}
             </h1>
             {hero?.description ? <p className="mt-6 max-w-2xl text-lg leading-8 text-white/80 sm:text-xl">{hero.description}</p> : !hasHeroContent ? <p className="mt-6 max-w-xl text-lg leading-8 text-white/72">Conteúdo institucional em preparação para publicação.</p> : null}
-            <div className="mt-9 flex flex-wrap gap-3">
-              <CmsButton callToAction={hero?.emergencyCta} fallback={{label: 'Emergência 112', href: 'tel:112', ariaLabel: 'Ligar 112 em caso de emergência', variant: 'emergency'}} />
-              <CmsButton callToAction={hero?.recruitmentCta} fallback={{label: 'Quero ser bombeiro', href: '/recrutamento', variant: 'gold'}} />
-              <CmsButton callToAction={hero?.supportCta} fallback={{label: 'Sócios e apoio', href: '/socios-e-apoio', variant: 'light'}} />
+            <div className="mt-9 grid gap-3 sm:flex sm:flex-wrap">
+              <CmsButton className="w-full sm:w-auto" callToAction={hero?.emergencyCta} fallback={{label: 'Emergência 112', href: 'tel:112', ariaLabel: 'Ligar 112 em caso de emergência', variant: 'emergency'}} />
+              <CmsButton className="w-full sm:w-auto" callToAction={hero?.recruitmentCta} fallback={{label: 'Quero ser bombeiro', href: '/recrutamento', variant: 'gold'}} />
+              <CmsButton className="w-full sm:w-auto" callToAction={hero?.supportCta} fallback={{label: 'Sócios e apoio', href: '/socios-e-apoio', variant: 'light'}} />
             </div>
           </div>
         </div>
