@@ -23,7 +23,7 @@ Durante a verificação anónima foi identificado e corrigido um defeito anterio
 | Notícia | Participação no Dia Regional do Bombeiro em Portimão, com 13 operacionais e três viaturas no evento | [Comemorações do Dia Regional do Bombeiro](https://www.cm-viladobispo.pt/noticias/comemoracoes-do-dia-regional-do-bombeiro-do-algarve), Município de Vila do Bispo | evento 2026-05-03; atualização 2026-05-12 | HIGH | YES | O artigo esclarece expressamente que estes números são apenas os da participação, não totais do corpo/frota. |
 | Notícia | Segunda adenda ao protocolo de transporte social | [Notícia municipal](https://www.cm-viladobispo.pt/noticias/camara-promove-transporte-social-mais-abrangente-em-colaboracao-com-os-bombeiros-de-vila-do-bispo), Município de Vila do Bispo | 2026-01-08 | HIGH | YES | Redação original; sem reproduzir fotografias ou parágrafos da fonte. |
 | Imagem | `Logo_bombeiros.jpeg` é o emblema oficial fornecido para o projeto | `docs/images/Logo_bombeiros.jpeg`, fornecido diretamente pelos Bombeiros | disponibilizado antes de 2026-09-03 | HIGH | YES | Carregado uma só vez e usado em `siteSettings.logo`; alt: “Emblema dos Bombeiros Voluntários de Vila do Bispo”. |
-| Imagem | `Foto_Quartel.jpg` representa o quartel | `docs/images/Foto_Quartel.jpg`, fornecido diretamente pelos Bombeiros | disponibilizado antes de 2026-09-03 | HIGH | YES | Carregado uma só vez e reutilizado no hero e nas páginas Associação/Corpo de Bombeiros; alt: “Quartel dos Bombeiros Voluntários de Vila do Bispo”. |
+| Imagem | `Foto_Quartel.jpg` representa o quartel | `docs/images/Foto_Quartel.jpg`, fornecido diretamente pelos Bombeiros | disponibilizado antes de 2026-09-03 | HIGH | YES | Carregado uma só vez e reutilizado no hero, na missão e nas páginas Associação/Corpo de Bombeiros; alt: “Quartel dos Bombeiros Voluntários de Vila do Bispo”. |
 
 O documento e a categoria de desenvolvimento “Artigo de teste”/“teste” foram confirmados no dataset como conteúdo inequivocamente fictício (`asdf`, “Apenas um teste”) e despublicados. Foram conservados como rascunhos recuperáveis; nenhum conteúdo institucional real foi apagado.
 
@@ -40,6 +40,10 @@ O documento e a categoria de desenvolvimento “Artigo de teste”/“teste” f
 O headline “Desde 1982 ao serviço da comunidade”, os títulos de secção, a síntese de missão e as descrições de serviços são redação editorial original baseada apenas nos factos HIGH acima. Não são apresentados como lema, missão estatutária ou formulação oficialmente aprovada pela Associação.
 
 A chamada para recrutamento usa apenas “Quero ser bombeiro” e liga à página informativa; não afirma que o recrutamento esteja aberto. A chamada “Sócios e apoio” não apresenta direitos, quotas ou métodos de donativo. Não foi publicada uma lista formal de valores.
+
+As páginas Formação e Recrutamento usam texto editorial geral e duradouro. A Formação explica a finalidade da preparação contínua sem criar uma ação fictícia. O Recrutamento não apresenta idades, requisitos, etapas, datas ou uma campanha aberta; esclarece que essas condições só serão divulgadas depois de confirmação oficial.
+
+Na ausência de fotografias editoriais autorizadas, os cartões podem mostrar ilustrações vetoriais institucionais controladas no CMS. Estes visuais não são fotografias, não representam meios ou ocorrências reais e são substituídos automaticamente quando o editor publica uma imagem.
 
 ## Conflicting information
 
@@ -59,7 +63,7 @@ A chamada para recrutamento usa apenas “Quero ser bombeiro” e liga à págin
 | Redes sociais | Instagram `bombeiros_vila_do_bispo` e possíveis páginas Facebook | MEDIUM/LOW | NO | As páginas diretas não puderam ser verificadas de forma fiável devido a restrições técnicas/autenticação. Não se publicou qualquer perfil ou mirror. |
 | Comando | Nome completo “Emerson Manuel Silva Gomes” | MEDIUM | NO | A fonte municipal confirma apenas “Emerson Gomes”; publicou-se somente essa forma. |
 | Comando | David Correia, Adjunto de Comando | LOW | NO | Não foi encontrada fonte primária atual suficiente. |
-| Recrutamento | Recrutamento aberto em 2026 e respetivas condições | LOW | NO | Não foi encontrada publicação oficial atual e acessível. O singleton permanece ausente. |
+| Recrutamento | Recrutamento aberto em 2026 e respetivas condições | LOW | NO | Não foi encontrada publicação oficial atual e acessível. Foi publicada apenas uma apresentação geral que declara expressamente não existir confirmação de candidaturas abertas. |
 | Serviços | Resgate em falésias/grande ângulo, formação pública ou catálogo operacional detalhado | LOW | NO | Atividades plausíveis não equivalem a confirmação local atual. |
 | Associação | Valores formais, fundadores, frota inicial, primeira ocorrência, datas do quartel | LOW/UNKNOWN | NO | Ausência de fonte institucional ou governamental suficiente. |
 | Sócios/donativos | Condições, benefícios, quotas, IBAN, MB WAY e outros métodos | UNKNOWN | NO | Nenhuma informação diretamente autorizada. Os respetivos singletons permanecem ausentes. |

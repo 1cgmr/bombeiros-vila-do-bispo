@@ -1,6 +1,7 @@
 export const singletonTypes = new Set([
   'siteSettings',
   'homepage',
+  'trainingInformation',
   'recruitmentInformation',
   'membershipInformation',
   'donationInformation',

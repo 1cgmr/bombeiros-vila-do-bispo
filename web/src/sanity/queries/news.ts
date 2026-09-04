@@ -10,6 +10,7 @@ export const NEWS_ARTICLES_QUERY = defineQuery(`
       "slug": slug.current,
       excerpt,
       publicationDate,
+      fallbackVisual,
       mainImage{
         asset->{_id, url, metadata{dimensions, lqip}},
         alt,
@@ -30,6 +31,7 @@ export const NEWS_ARTICLE_BY_SLUG_QUERY = defineQuery(`
     "slug": slug.current,
     excerpt,
     publicationDate,
+    fallbackVisual,
     mainImage{
       asset->{_id, url, metadata{dimensions, lqip}},
       alt,

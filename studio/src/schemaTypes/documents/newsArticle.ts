@@ -47,6 +47,25 @@ export const newsArticle = defineType({
       group: 'content',
     }),
     defineField({
+      name: 'fallbackVisual',
+      title: 'Ilustração alternativa',
+      type: 'string',
+      group: 'content',
+      description:
+        'Usada apenas quando o artigo não tem imagem principal. É uma ilustração gráfica e não representa uma ocorrência real.',
+      options: {
+        list: [
+          {title: 'Viatura', value: 'vehicle'},
+          {title: 'Incêndios', value: 'fire'},
+          {title: 'Comunidade', value: 'community'},
+          {title: 'Transporte', value: 'transport'},
+          {title: 'Formação', value: 'training'},
+          {title: 'Institucional', value: 'institutional'},
+          {title: 'Geral', value: 'general'},
+        ],
+      },
+    }),
+    defineField({
       name: 'body',
       title: 'Conteúdo',
       type: 'portableText',

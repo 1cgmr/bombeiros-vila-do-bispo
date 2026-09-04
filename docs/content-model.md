@@ -6,18 +6,19 @@
 - Não são guardadas submissões de formulários, dados privados ou informação operacional sensível.
 - As etiquetas, descrições e mensagens de validação do Studio usam português europeu (`pt-PT`); os identificadores técnicos usam inglês.
 - O modelo é estruturado e previsível. Não existe um construtor genérico de páginas.
-- Nenhum documento ou facto institucional é criado automaticamente pelo código.
+- A aplicação não cria conteúdo durante o funcionamento normal. Scripts editoriais autenticados, explícitos e reversíveis podem preparar o lote inicial documentado sem inventar factos.
 
 ## Documentos singleton
 
 Cada singleton tem um ID estável igual ao respetivo tipo, abre diretamente no Studio e não pode ser criado de forma genérica, duplicado, eliminado ou despublicado.
 
-Os documentos não são semeados automaticamente. Abrir uma entrada fixa no Studio apresenta o formulário associado ao ID estável; o rascunho só é criado quando o editor efetua uma alteração. As validações impedem a publicação de documentos obrigatórios vazios. Na conclusão do rollout inicial não foi criado nem publicado qualquer documento fixo.
+Abrir uma entrada fixa no Studio apresenta o formulário associado ao ID estável; o rascunho só é criado quando o editor efetua uma alteração. As validações impedem a publicação de documentos obrigatórios vazios. O lote editorial inicial foi criado através de scripts autenticados documentados; a edição corrente continua a ser feita no Studio.
 
 | Tipo / ID | Etiqueta | Finalidade e campos principais |
 | --- | --- | --- |
 | `siteSettings` | Configurações do Site | Nome oficial/curto, descrição institucional, logótipo acessível, URL oficial e SEO por omissão. |
 | `homepage` | Página Inicial | Hero, três chamadas de ação, indicadores confirmados, missão, serviços em destaque, configuração das notícias recentes, chamada de apoio e SEO. |
+| `trainingInformation` | Formação → Apresentação | Introdução geral, informação complementar e SEO. Não representa uma ação ou curso concreto. |
 | `recruitmentInformation` | Recrutamento | Introdução, elegibilidade, requisitos, etapas, expectativas, FAQ, introdução ao futuro formulário, resumo de privacidade e SEO. |
 | `membershipInformation` | Informação para Sócios | Introdução, elegibilidade, benefícios, processo, quotas confirmadas, FAQ, introdução ao futuro formulário e SEO. |
 | `donationInformation` | Donativos | Introdução, formas de ajudar, métodos de donativo estruturados e SEO. |
@@ -42,7 +43,7 @@ Campos: título, introdução, imagem acessível, Portable Text controlado, refe
 
 | Tipo | Finalidade | Campos principais e relações |
 | --- | --- | --- |
-| `newsArticle` | Notícias e atividades | Título, slug único no tipo, resumo, imagem, conteúdo, data de publicação, categorias, autor opcional e SEO. Referencia `newsCategory[]` e opcionalmente `person`. |
+| `newsArticle` | Notícias e atividades | Título, slug único no tipo, resumo, imagem, ilustração alternativa controlada, conteúdo, data de publicação, categorias, autor opcional e SEO. Referencia `newsCategory[]` e opcionalmente `person`. |
 | `newsCategory` | Classificação editorial | Nome, slug único no tipo e descrição. |
 | `service` | Serviços públicos | Título, slug, resumo, imagem ou símbolo controlado, conteúdo, disponibilidade, contactos, ordem e SEO. Pode ser referenciado por `homepage`. |
 | `vehicle` | Frota pública | Designação, categoria controlada, imagens, descrição, especificações aprovadas e ordem. Não contempla dados operacionais sensíveis. |
@@ -71,6 +72,8 @@ Os objetos não têm ciclo de vida independente e ficam embebidos no documento q
 | `governingRole` | Cargo, referência obrigatória a `person` e nota pública. |
 | `galleryItem` | `accessibleImage` dentro de uma lista ordenável. |
 | `faqItem` | Pergunta e resposta em Portable Text controlado. |
+
+As ilustrações alternativas de notícias e os símbolos de serviços são visuais vetoriais da interface. Não são fotografias nem representam viaturas, pessoas ou ocorrências reais. Uma imagem editorial publicada no Sanity tem sempre prioridade.
 
 ## Relações principais
 

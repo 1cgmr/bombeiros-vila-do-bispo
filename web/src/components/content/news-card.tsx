@@ -4,6 +4,7 @@ import {formatDate} from '@/lib/content'
 import {Icon} from '@/components/ui/icon'
 
 import {SanityImage, type SanityImageValue} from './sanity-image'
+import {ContentVisual, type ContentVisualVariant} from './content-visual'
 
 export type NewsCardValue = {
   _id: string
@@ -12,6 +13,7 @@ export type NewsCardValue = {
   excerpt?: string | null
   publicationDate?: string | null
   mainImage?: SanityImageValue
+  fallbackVisual?: string | null
   categories?: Array<{_id: string; name?: string | null}> | null
 }
 
@@ -23,7 +25,7 @@ export function NewsCard({article}: {article: NewsCardValue}) {
   return (
     <article className="group overflow-hidden rounded-sm bg-white shadow-[0_8px_30px_rgb(9_35_61_/_0.08)]">
       <div className="aspect-[16/9] overflow-hidden bg-brand-navy/8">
-        {article.mainImage?.asset?.url ? <SanityImage className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" height={480} image={article.mainImage} sizes="(max-width: 768px) 100vw, 33vw" width={800} /> : <div aria-hidden="true" className="h-full bg-[linear-gradient(135deg,var(--brand-navy),#153d60)]" />}
+        {article.mainImage?.asset?.url ? <SanityImage className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" height={480} image={article.mainImage} sizes="(max-width: 768px) 100vw, 33vw" width={800} /> : <ContentVisual variant={article.fallbackVisual as ContentVisualVariant | null} />}
       </div>
       <div className="p-6">
         <div className="flex flex-wrap items-center gap-3 text-xs font-bold uppercase tracking-wide text-brand-gold-dark">
@@ -33,7 +35,7 @@ export function NewsCard({article}: {article: NewsCardValue}) {
         </div>
         <h3 className="mt-3 text-xl font-extrabold leading-snug text-brand-navy"><Link className="focus-visible:outline-2 focus-visible:outline-brand-gold" href={`/noticias/${article.slug}`}>{article.title}</Link></h3>
         {article.excerpt ? <p className="mt-3 line-clamp-3 leading-7 text-muted-text">{article.excerpt}</p> : null}
-        <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-extrabold uppercase tracking-wide text-brand-gold-dark">Ler notícia <Icon className="h-4 w-4" name="arrow" /></span>
+        <Link className="mt-5 inline-flex items-center gap-1.5 text-sm font-extrabold uppercase tracking-wide text-brand-gold-dark hover:text-brand-navy focus-visible:outline-2 focus-visible:outline-brand-gold" href={`/noticias/${article.slug}`}>Ler notícia <Icon className="h-4 w-4" name="arrow" /></Link>
       </div>
     </article>
   )

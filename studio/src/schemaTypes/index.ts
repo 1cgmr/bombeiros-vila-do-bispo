@@ -13,6 +13,7 @@ import { person } from './documents/person'
 import { recruitmentInformation } from './documents/recruitmentInformation'
 import { service } from './documents/service'
 import { training } from './documents/training'
+import { trainingInformation } from './documents/trainingInformation'
 import { vehicle } from './documents/vehicle'
 import { accessibleImage } from './objects/accessibleImage'
 import { address } from './objects/address'
@@ -52,6 +53,7 @@ export const schemaTypes = [
   newsCategory,
   service,
   vehicle,
+  trainingInformation,
   training,
   gallery,
   institutionalDocument,

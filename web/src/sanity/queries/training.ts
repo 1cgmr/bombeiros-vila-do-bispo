@@ -2,6 +2,15 @@ import {defineQuery} from 'groq'
 
 import {sanityClient} from '../client'
 
+export const TRAINING_INFORMATION_QUERY = defineQuery(`
+  *[_type == "trainingInformation" && _id == "trainingInformation"][0]{
+    _id,
+    introduction,
+    body,
+    seo
+  }
+`)
+
 export const TRAINING_QUERY = defineQuery(`
   *[_type == "training"] | order(coalesce(startDate, "9999-12-31T23:59:59Z") asc, title asc){
     _id,
@@ -38,6 +47,10 @@ export const TRAINING_BY_SLUG_QUERY = defineQuery(`
 
 export function getTraining() {
   return sanityClient.fetch(TRAINING_QUERY)
+}
+
+export function getTrainingInformation() {
+  return sanityClient.fetch(TRAINING_INFORMATION_QUERY)
 }
 
 export function getTrainingBySlug(slug: string) {

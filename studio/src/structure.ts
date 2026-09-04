@@ -107,7 +107,21 @@ export const structure: StructureResolver = (S) => {
             ]),
         ),
       S.documentTypeListItem('service').title('Serviços'),
-      S.documentTypeListItem('training').title('Formação'),
+      S.listItem()
+        .id('training')
+        .title('Formação')
+        .child(
+          S.list()
+            .title('Formação')
+            .items([
+              fixedDocument(
+                'Apresentação',
+                'trainingInformation',
+                'trainingInformation',
+              ),
+              S.documentTypeListItem('training').title('Ações de formação'),
+            ]),
+        ),
       fixedDocument(
         'Recrutamento',
         'recruitmentInformation',
