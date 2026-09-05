@@ -187,7 +187,30 @@ export type TrainingInformation = {
   _rev: string;
   introduction: PortableText;
   body?: PortableText;
+  contactForm?: ContactForm;
   seo?: Seo;
+};
+
+export type ContactForm = {
+  _type: "contactForm";
+  enabled?: boolean;
+  heading?: string;
+  introduction?: PortableText;
+  privacyNotice?: PortableText;
+  recipientEmail?: string;
+  emailSubjectPrefix?: string;
+  submitButtonLabel?: string;
+  successMessage?: string;
+  errorMessage?: string;
+  nameLabel?: string;
+  emailLabel?: string;
+  phoneVisible?: boolean;
+  phoneRequired?: boolean;
+  phoneLabel?: string;
+  subjectVisible?: boolean;
+  subjectRequired?: boolean;
+  subjectLabel?: string;
+  messageLabel?: string;
 };
 
 export type Vehicle = {
@@ -417,8 +440,7 @@ export type RecruitmentInformation = {
       _key: string;
     } & FaqItem
   >;
-  futureFormIntroduction?: PortableText;
-  privacySummary?: PortableText;
+  contactForm?: ContactForm;
   seo?: Seo;
 };
 
@@ -699,6 +721,7 @@ export type AllSanitySchemaTypes =
   | Slug
   | Training
   | TrainingInformation
+  | ContactForm
   | Vehicle
   | Service
   | NewsCategory
@@ -733,6 +756,27 @@ export type AllSanitySchemaTypes =
   | SanityAssetSourceData
   | SanityImageAsset
   | Geopoint;
+
+// Source: ../web/src/sanity/queries/contact-forms.ts
+// Variable: CONTACT_FORM_DELIVERY_QUERY
+// Query: *[_id == $documentId && _type == $documentType][0]{    contactForm{      enabled,      recipientEmail,      emailSubjectPrefix,      phoneVisible,      phoneRequired,      subjectVisible,      subjectRequired,      "hasPrivacyNotice": count(privacyNotice) > 0    }  }
+export type CONTACT_FORM_DELIVERY_QUERY_RESULT =
+  | {
+      contactForm: null;
+    }
+  | {
+      contactForm: {
+        enabled: boolean | null;
+        recipientEmail: string | null;
+        emailSubjectPrefix: string | null;
+        phoneVisible: boolean | null;
+        phoneRequired: boolean | null;
+        subjectVisible: boolean | null;
+        subjectRequired: boolean | null;
+        hasPrivacyNotice: boolean | null;
+      } | null;
+    }
+  | null;
 
 // Source: ../web/src/sanity/queries/contact.ts
 // Variable: CONTACT_INFORMATION_QUERY
@@ -1264,7 +1308,7 @@ export type PARTNERS_QUERY_RESULT = Array<{
 
 // Source: ../web/src/sanity/queries/recruitment.ts
 // Variable: RECRUITMENT_INFORMATION_QUERY
-// Query: *[_type == "recruitmentInformation" && _id == "recruitmentInformation"][0]{    _id,    introduction,    eligibility,    requirements,    stages[]{_key, title, description},    expectations,    faq[]{_key, question, answer},    futureFormIntroduction,    privacySummary,    seo  }
+// Query: *[_type == "recruitmentInformation" && _id == "recruitmentInformation"][0]{    _id,    introduction,    eligibility,    requirements,    stages[]{_key, title, description},    expectations,    faq[]{_key, question, answer},    contactForm{      enabled,      heading,      introduction,      privacyNotice,      submitButtonLabel,      successMessage,      errorMessage,      nameLabel,      emailLabel,      phoneLabel,      phoneVisible,      phoneRequired,      subjectLabel,      subjectVisible,      subjectRequired,      messageLabel    },    seo  }
 export type RECRUITMENT_INFORMATION_QUERY_RESULT = {
   _id: "recruitmentInformation";
   introduction: PortableText;
@@ -1281,8 +1325,24 @@ export type RECRUITMENT_INFORMATION_QUERY_RESULT = {
     question: string;
     answer: PortableText;
   }> | null;
-  futureFormIntroduction: PortableText | null;
-  privacySummary: PortableText | null;
+  contactForm: {
+    enabled: boolean | null;
+    heading: string | null;
+    introduction: PortableText | null;
+    privacyNotice: PortableText | null;
+    submitButtonLabel: string | null;
+    successMessage: string | null;
+    errorMessage: string | null;
+    nameLabel: string | null;
+    emailLabel: string | null;
+    phoneLabel: string | null;
+    phoneVisible: boolean | null;
+    phoneRequired: boolean | null;
+    subjectLabel: string | null;
+    subjectVisible: boolean | null;
+    subjectRequired: boolean | null;
+    messageLabel: string | null;
+  } | null;
   seo: Seo | null;
 } | null;
 
@@ -1418,11 +1478,29 @@ export type SITE_SETTINGS_QUERY_RESULT = {
 
 // Source: ../web/src/sanity/queries/training.ts
 // Variable: TRAINING_INFORMATION_QUERY
-// Query: *[_type == "trainingInformation" && _id == "trainingInformation"][0]{    _id,    introduction,    body,    seo  }
+// Query: *[_type == "trainingInformation" && _id == "trainingInformation"][0]{    _id,    introduction,    body,    contactForm{      enabled,      heading,      introduction,      privacyNotice,      submitButtonLabel,      successMessage,      errorMessage,      nameLabel,      emailLabel,      phoneLabel,      phoneVisible,      phoneRequired,      subjectLabel,      subjectVisible,      subjectRequired,      messageLabel    },    seo  }
 export type TRAINING_INFORMATION_QUERY_RESULT = {
   _id: "trainingInformation";
   introduction: PortableText;
   body: PortableText | null;
+  contactForm: {
+    enabled: boolean | null;
+    heading: string | null;
+    introduction: PortableText | null;
+    privacyNotice: PortableText | null;
+    submitButtonLabel: string | null;
+    successMessage: string | null;
+    errorMessage: string | null;
+    nameLabel: string | null;
+    emailLabel: string | null;
+    phoneLabel: string | null;
+    phoneVisible: boolean | null;
+    phoneRequired: boolean | null;
+    subjectLabel: string | null;
+    subjectVisible: boolean | null;
+    subjectRequired: boolean | null;
+    messageLabel: string | null;
+  } | null;
   seo: Seo | null;
 } | null;
 
@@ -1518,6 +1596,7 @@ export type VEHICLES_QUERY_RESULT = Array<{
 // Query TypeMap
 declare global {
   interface SanityQueries {
+    '\n  *[_id == $documentId && _type == $documentType][0]{\n    contactForm{\n      enabled,\n      recipientEmail,\n      emailSubjectPrefix,\n      phoneVisible,\n      phoneRequired,\n      subjectVisible,\n      subjectRequired,\n      "hasPrivacyNotice": count(privacyNotice) > 0\n    }\n  }\n': CONTACT_FORM_DELIVERY_QUERY_RESULT;
     '\n  *[\n    _type == "contactInformation" &&\n    _id == "contactInformation" &&\n    informationConfirmedForPublication == true\n  ][0]{\n    _id,\n    address,\n    generalEmail,\n    telephone,\n    additionalChannels[authorizedForPublication == true]{\n      _key,\n      label,\n      channelType,\n      value,\n      description\n    },\n    contactHours,\n    directionsMapUrl,\n    socialLinks[]{_key, platform, label, url},\n    emergencyWarning,\n    seo\n  }\n': CONTACT_INFORMATION_QUERY_RESULT;
     '\n  *[_type == "donationInformation" && _id == "donationInformation"][0]{\n    _id,\n    introduction,\n    waysToContribute,\n    donationMethods[confirmedForPublication == true]{\n      _key,\n      methodType,\n      title,\n      description,\n      iban,\n      mbWayNumber,\n      externalUrl\n    },\n    seo\n  }\n': DONATION_INFORMATION_QUERY_RESULT;
     '\n  *[_type == "gallery"] | order(date desc, title asc){\n    _id,\n    title,\n    "slug": slug.current,\n    date,\n    coverImage{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    }\n  }\n': GALLERIES_QUERY_RESULT;
@@ -1532,11 +1611,11 @@ declare global {
     '\n  *[_type == "newsArticle" && slug.current == $slug && publicationDate <= now()][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    publicationDate,\n    fallbackVisual,\n    mainImage{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    body,\n    categories[]->{_id, name, "slug": slug.current},\n    author->{\n      _id,\n      publicName,\n      photograph{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      }\n    },\n    seo\n  }\n': NEWS_ARTICLE_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "newsCategory"] | order(name asc){\n    _id,\n    name,\n    "slug": slug.current,\n    description\n  }\n': NEWS_CATEGORIES_QUERY_RESULT;
     '\n  *[_type == "partner" && active == true]\n    | order(coalesce(displayOrder, 9999) asc, name asc){\n      _id,\n      name,\n      logo{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      },\n      website,\n      description,\n      displayOrder\n    }\n': PARTNERS_QUERY_RESULT;
-    '\n  *[_type == "recruitmentInformation" && _id == "recruitmentInformation"][0]{\n    _id,\n    introduction,\n    eligibility,\n    requirements,\n    stages[]{_key, title, description},\n    expectations,\n    faq[]{_key, question, answer},\n    futureFormIntroduction,\n    privacySummary,\n    seo\n  }\n': RECRUITMENT_INFORMATION_QUERY_RESULT;
+    '\n  *[_type == "recruitmentInformation" && _id == "recruitmentInformation"][0]{\n    _id,\n    introduction,\n    eligibility,\n    requirements,\n    stages[]{_key, title, description},\n    expectations,\n    faq[]{_key, question, answer},\n    contactForm{\n      enabled,\n      heading,\n      introduction,\n      privacyNotice,\n      submitButtonLabel,\n      successMessage,\n      errorMessage,\n      nameLabel,\n      emailLabel,\n      phoneLabel,\n      phoneVisible,\n      phoneRequired,\n      subjectLabel,\n      subjectVisible,\n      subjectRequired,\n      messageLabel\n    },\n    seo\n  }\n': RECRUITMENT_INFORMATION_QUERY_RESULT;
     '\n  *[_type == "service"] | order(coalesce(displayOrder, 9999) asc, title asc){\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    visualType,\n    image{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    icon,\n    displayOrder\n  }\n': SERVICES_QUERY_RESULT;
     '\n  *[_type == "service" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    visualType,\n    image{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    icon,\n    content,\n    availabilityInformation,\n    contactChannels[authorizedForPublication == true]{\n      _key,\n      label,\n      channelType,\n      value,\n      description\n    },\n    seo\n  }\n': SERVICE_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "siteSettings" && _id == "siteSettings"][0]{\n    _id,\n    _type,\n    officialName,\n    shortName,\n    institutionalDescription,\n    logo{\n      asset->{\n        _id,\n        url,\n        metadata{dimensions, lqip}\n      },\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    siteUrl,\n    defaultSeo{\n      metaTitle,\n      metaDescription,\n      noIndex,\n      openGraphImage{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      }\n    }\n  }\n': SITE_SETTINGS_QUERY_RESULT;
-    '\n  *[_type == "trainingInformation" && _id == "trainingInformation"][0]{\n    _id,\n    introduction,\n    body,\n    seo\n  }\n': TRAINING_INFORMATION_QUERY_RESULT;
+    '\n  *[_type == "trainingInformation" && _id == "trainingInformation"][0]{\n    _id,\n    introduction,\n    body,\n    contactForm{\n      enabled,\n      heading,\n      introduction,\n      privacyNotice,\n      submitButtonLabel,\n      successMessage,\n      errorMessage,\n      nameLabel,\n      emailLabel,\n      phoneLabel,\n      phoneVisible,\n      phoneRequired,\n      subjectLabel,\n      subjectVisible,\n      subjectRequired,\n      messageLabel\n    },\n    seo\n  }\n': TRAINING_INFORMATION_QUERY_RESULT;
     '\n  *[_type == "training"] | order(coalesce(startDate, "9999-12-31T23:59:59Z") asc, title asc){\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    description,\n    startDate,\n    endDate,\n    location,\n    audience,\n    enrollmentInformation,\n    status,\n    seo\n  }\n': TRAINING_QUERY_RESULT;
     '\n  *[_type == "training" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    summary,\n    description,\n    startDate,\n    endDate,\n    location,\n    audience,\n    enrollmentInformation,\n    status,\n    seo\n  }\n': TRAINING_BY_SLUG_QUERY_RESULT;
     '\n  *[_type == "vehicle"] | order(coalesce(displayOrder, 9999) asc, designation asc){\n    _id,\n    designation,\n    category,\n    otherCategory,\n    mainImage{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    publicDescription,\n    "publicSpecifications": select(\n      specificationsApprovedForPublication == true => publicSpecifications\n    ),\n    gallery[]{\n      _key,\n      image{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      }\n    },\n    displayOrder\n  }\n': VEHICLES_QUERY_RESULT;

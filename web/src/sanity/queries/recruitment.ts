@@ -11,8 +11,24 @@ export const RECRUITMENT_INFORMATION_QUERY = defineQuery(`
     stages[]{_key, title, description},
     expectations,
     faq[]{_key, question, answer},
-    futureFormIntroduction,
-    privacySummary,
+    contactForm{
+      enabled,
+      heading,
+      introduction,
+      privacyNotice,
+      submitButtonLabel,
+      successMessage,
+      errorMessage,
+      nameLabel,
+      emailLabel,
+      phoneLabel,
+      phoneVisible,
+      phoneRequired,
+      subjectLabel,
+      subjectVisible,
+      subjectRequired,
+      messageLabel
+    },
     seo
   }
 `)

@@ -18,8 +18,8 @@ Abrir uma entrada fixa no Studio apresenta o formulário associado ao ID estáve
 | --- | --- | --- |
 | `siteSettings` | Configurações do Site | Nome oficial/curto, descrição institucional, logótipo acessível, URL oficial e SEO por omissão. |
 | `homepage` | Página Inicial | Hero, três chamadas de ação, indicadores confirmados, missão, serviços em destaque, configuração das notícias recentes, chamada de apoio e SEO. |
-| `trainingInformation` | Formação → Apresentação | Introdução geral, informação complementar e SEO. Não representa uma ação ou curso concreto. |
-| `recruitmentInformation` | Recrutamento | Introdução, elegibilidade, requisitos, etapas, expectativas, FAQ, introdução ao futuro formulário, resumo de privacidade e SEO. |
+| `trainingInformation` | Formação → Apresentação | Introdução geral, informação complementar, formulário de contacto opcional e SEO. Não representa uma ação ou curso concreto. |
+| `recruitmentInformation` | Recrutamento | Introdução, elegibilidade, requisitos, etapas, expectativas, FAQ, formulário de contacto opcional e SEO. |
 | `membershipInformation` | Informação para Sócios | Introdução, elegibilidade, benefícios, processo, quotas confirmadas, FAQ, introdução ao futuro formulário e SEO. |
 | `donationInformation` | Donativos | Introdução, formas de ajudar, métodos de donativo estruturados e SEO. |
 | `contactInformation` | Contactos | Confirmação editorial, morada, email, telefone, canais adicionais, horário, mapa, redes sociais, aviso de emergência e SEO. |
@@ -68,6 +68,7 @@ Os objetos não têm ciclo de vida independente e ficam embebidos no documento q
 | `socialLink` | Plataforma controlada e URL HTTPS oficial. |
 | `address` | Linhas de morada, código postal, localidade, concelho e país. |
 | `contactChannel` | Tipo, valor, nota e confirmação obrigatória de autorização para publicação. |
+| `contactForm` | Configuração controlada do formulário de Formação ou Recrutamento: estado, textos, destinatário, prefixo do assunto, etiquetas e opções dos campos telefone/assunto. É embebida independentemente em cada singleton e não é um construtor genérico. |
 | `donationMethod` | Tipo controlado, instruções, IBAN/MB WAY/URL quando aplicável e confirmação datada. |
 | `governingRole` | Cargo, referência obrigatória a `person` e nota pública. |
 | `galleryItem` | `accessibleImage` dentro de uma lista ordenável. |

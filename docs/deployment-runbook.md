@@ -20,6 +20,15 @@ npm install
 npm run dev
 ```
 
+Para testar os formulários, acrescente ao ficheiro local ignorado `web/.env.local`:
+
+```text
+RESEND_API_KEY=<chave de envio do Resend>
+RESEND_FROM_EMAIL=<endereço autorizado pelo Resend>
+```
+
+Nunca use o prefixo `NEXT_PUBLIC_` nestas variáveis e nunca copie valores reais para `.env.example`, documentação ou Git.
+
 Sanity Studio:
 
 ```powershell
@@ -86,6 +95,34 @@ O Vercel usa a integração GitHub existente e `web/` como Root Directory:
 - não é necessário `VERCEL_TOKEN` nem GitHub Actions.
 
 Publicar conteúdo no Sanity é independente deste fluxo. Um deployment do frontend só é necessário quando o código da aplicação muda.
+
+## Formulários e Resend
+
+O projeto Vercel de `web/` necessita de `RESEND_API_KEY` e `RESEND_FROM_EMAIL` nos ambientes Preview e Production. Alterações a variáveis aplicam-se a deployments seguintes, pelo que deve criar um novo deployment depois de as configurar.
+
+Crie no Resend uma chave com permissão apenas de envio e, quando disponível, restrita ao domínio verificado. `RESEND_FROM_EMAIL` deve conter apenas o endereço, por exemplo `formularios@dominio-verificado.pt`; o nome público do remetente é acrescentado pela aplicação.
+
+O remetente `onboarding@resend.dev` serve apenas para desenvolvimento: só pode enviar para o endereço associado à conta Resend. Para enviar a outros destinatários é obrigatório verificar um domínio ou subdomínio no Resend e configurar os respetivos registos DNS. A passagem para o remetente institucional exige apenas alterar `RESEND_FROM_EMAIL`, sem alteração de código.
+
+### Configuração editorial e teste inicial
+
+Depois de publicar o schema do Studio, abra os documentos existentes `Formação -> Apresentação` e `Recrutamento`. Configure os dois objetos de formulário de forma independente e introduza temporariamente `cgmr.321@gmail.com` como destinatário em ambos. Este endereço não é um valor inicial do schema nem configuração da aplicação.
+
+Mantenha `Formulário ativo` desligado até estarem preenchidos e aprovados o título, os textos, o aviso de privacidade, o destinatário, o prefixo do assunto, as etiquetas e as mensagens. Para um teste Preview controlado, publique temporariamente a ativação de um formulário de cada vez, confirme a receção e o Reply-To, e volte a desativá-lo se a publicação em produção ainda não estiver aprovada.
+
+O dataset Sanity é partilhado pelos deployments e é público; o destinatário editorial pode ser consultado diretamente no Content Lake, embora nunca seja incluído no payload do componente cliente. Substitua o endereço pessoal temporário por um endereço institucional antes da ativação definitiva.
+
+### Ativação em produção
+
+Antes de ativar os formulários em Production:
+
+1. Publicar um aviso de privacidade aprovado; não inventar texto jurídico.
+2. Verificar o domínio/subdomínio remetente no Resend.
+3. Configurar as duas variáveis em Vercel Production e efetuar novo deployment.
+4. Substituir o destinatário temporário pelos endereços institucionais confirmados.
+5. Confirmar um envio de cada formulário, o conteúdo recebido e o Reply-To.
+
+As submissões não são guardadas no Sanity ou numa base de dados. O Resend processa e conserva dados de envio de acordo com as condições da conta; esta utilização deve constar da validação de privacidade institucional. Proteções adicionais contra abuso só devem ser avaliadas se o uso real demonstrar essa necessidade.
 
 ## Três operações distintas
 

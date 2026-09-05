@@ -1,10 +1,12 @@
 # Notas de dependências
 
-Auditoria verificada em 3 de setembro de 2026 com Node.js `24.19.0` e npm `11.17.0`.
+Auditoria verificada em 5 de setembro de 2026 com Node.js `24.19.0` e npm `11.17.0`.
 
 ## Frontend
 
 `npm audit` em `web/` não reporta vulnerabilidades conhecidas.
+
+O único cliente de produção acrescentado para os formulários é o SDK oficial `resend`. A interação dos componentes é testada com `@testing-library/react` e `jsdom`, ambos limitados a `devDependencies`; não foi adicionada uma biblioteca de formulários ou validação em runtime.
 
 ## Sanity Studio
 

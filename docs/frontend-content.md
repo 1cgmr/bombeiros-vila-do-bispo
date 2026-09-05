@@ -62,6 +62,14 @@ As consultas de documentos únicos e detalhes devolvem `null` quando o conteúdo
 
 Os componentes omitem secções opcionais vazias ou mostram estados públicos neutros nas páginas em que a ausência de conteúdo precisa de ser explicada. Nunca inventam contactos, datas, nomes, números, regras ou outros factos institucionais como fallback.
 
+## Formulários de contacto
+
+As páginas de Formação e Recrutamento projetam apenas a configuração necessária para apresentar o respetivo formulário: estado, textos, etiquetas e regras de visibilidade. O destinatário e o prefixo técnico do assunto não são incluídos nesta projeção nem passados ao componente cliente.
+
+O endpoint `POST /api/contact` aceita apenas os identificadores `training` e `recruitment`. O servidor associa-os aos singletons estáveis, volta a consultar a configuração publicada sem CDN e valida as regras editoriais antes de enviar por Resend. Campos de destinatário, remetente ou Reply-To enviados pelo browser são pedidos inválidos.
+
+Os dados pessoais da submissão não são escritos no Content Lake. O formulário fica totalmente oculto quando a configuração está ausente, inativa ou não contém o aviso de privacidade aprovado.
+
 ## Camada pública
 
 O App Router implementa a navegação institucional completa em `web/src/app/`. A homepage combina `homepage`, serviços, notícias e contactos publicados. Os componentes reutilizáveis de conteúdo e layout ficam em `web/src/components/`; os utilitários de navegação, metadata e normalização segura ficam em `web/src/lib/`.

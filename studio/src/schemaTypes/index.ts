@@ -19,6 +19,7 @@ import { accessibleImage } from './objects/accessibleImage'
 import { address } from './objects/address'
 import { callToAction } from './objects/callToAction'
 import { contactChannel } from './objects/contactChannel'
+import { contactForm } from './objects/contactForm'
 import { donationMethod } from './objects/donationMethod'
 import { faqItem } from './objects/faqItem'
 import { galleryItem } from './objects/galleryItem'
@@ -38,6 +39,7 @@ export const schemaTypes = [
   socialLink,
   address,
   contactChannel,
+  contactForm,
   donationMethod,
   governingRole,
   galleryItem,
