@@ -6,7 +6,7 @@ export const recruitmentInformation = defineType({
   type: 'document',
   groups: [
     { name: 'content', title: 'Informação', default: true },
-    { name: 'form', title: 'Futuro formulário' },
+    { name: 'form', title: 'Formulário de contacto' },
     { name: 'seo', title: 'SEO' },
   ],
   fields: [
@@ -79,18 +79,10 @@ export const recruitmentInformation = defineType({
       of: [defineArrayMember({ type: 'faqItem' })],
     }),
     defineField({
-      name: 'futureFormIntroduction',
-      title: 'Introdução ao futuro formulário',
-      type: 'portableText',
+      name: 'contactForm',
+      title: 'Formulário de contacto',
+      type: 'contactForm',
       group: 'form',
-    }),
-    defineField({
-      name: 'privacySummary',
-      title: 'Resumo de privacidade',
-      type: 'portableText',
-      group: 'form',
-      description:
-        'Texto curto a apresentar junto do futuro formulário; deverá ser validado antes da publicação.',
     }),
     defineField({ name: 'seo', title: 'SEO', type: 'seo', group: 'seo' }),
   ],

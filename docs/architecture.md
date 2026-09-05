@@ -15,6 +15,14 @@ Sanity Studio (Sanity hosting) ---> Sanity Content Lake
 Visitante ----------------------> Next.js (web/) ---> Vercel
 ```
 
+Os pedidos de contacto de Formação e Recrutamento seguem um fluxo adicional, sem aplicação ou persistência separada:
+
+```text
+Visitante -> formulário Next.js -> POST /api/contact -> Resend -> email configurado
+                                      |
+                                      +-> configuração publicada no Sanity
+```
+
 ## Componentes
 
 - **`web/`** — Next.js App Router, React, TypeScript estrito e Tailwind CSS. Server Components por omissão. Usa `@sanity/client` apenas para ler conteúdo publicado.
@@ -31,7 +39,9 @@ Visitante ----------------------> Next.js (web/) ---> Vercel
 - O TypeGen oficial do Sanity extrai o schema do Studio e gera `web/src/sanity/sanity.types.ts`, que é versionado e não exige autenticação durante builds normais do frontend.
 - Documentos singleton e páginas institucionais ausentes resultam em `null`; coleções vazias resultam em `[]`. A apresentação futura deve tratar estes estados sem inventar conteúdo.
 - Rascunhos, visual editing, Presentation Tool e revalidação por webhook ficam para fases posteriores.
-- Formulários, email e anti-spam não pertencem a esta fase. Quando forem implementados, os dados pessoais não serão guardados no dataset público.
+- Os formulários de Formação e Recrutamento usam um único Route Handler no projeto `web/`. O browser identifica apenas o formulário; o servidor resolve o destinatário na configuração publicada do respetivo singleton e envia a mensagem através do Resend.
+- As submissões não são guardadas no Sanity nem noutra base de dados. A validação no servidor, um campo honeypot e limites de tamanho constituem a proteção proporcional inicial contra abuso.
+- `RESEND_API_KEY` e `RESEND_FROM_EMAIL` são configuração exclusiva do servidor. O destinatário e os textos são conteúdo editorial do Sanity; o remetente técnico não é editável no CMS.
 - O WordPress referido na proposta está explicitamente substituído por Next.js + Sanity; mantém-se apenas o requisito de autonomia editorial.
 - A interface pública usa tokens semânticos navy, dourado, branco, neutros e vermelho de emergência, inferidos da direção visual aprovada. Estes valores podem ser afinados quando forem fornecidas normas formais de identidade.
 - O layout público é mobile-first, usa Server Components por omissão e restringe JavaScript do cliente ao menu móvel.

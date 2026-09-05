@@ -19,5 +19,7 @@ Todos os itens permanecem **pendentes de confirmação oficial** pela Direção/
 - [ ] IBAN, MB WAY e restantes meios/regras de donativo
 - [ ] Parceiros e autorização para apresentar nomes/logótipos
 - [ ] Textos legais e informação de privacidade aprovados
+- [ ] Aviso de privacidade dos formulários de Formação e Recrutamento aprovado
+- [ ] Destinatários e prefixos de assunto dos dois formulários confirmados independentemente
 
 Não transferir para o CMS os números, contactos, datas, nomes, imagens ou outros dados mostrados no mockup sem esta validação.

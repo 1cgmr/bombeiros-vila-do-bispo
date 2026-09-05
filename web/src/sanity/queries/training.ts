@@ -7,6 +7,24 @@ export const TRAINING_INFORMATION_QUERY = defineQuery(`
     _id,
     introduction,
     body,
+    contactForm{
+      enabled,
+      heading,
+      introduction,
+      privacyNotice,
+      submitButtonLabel,
+      successMessage,
+      errorMessage,
+      nameLabel,
+      emailLabel,
+      phoneLabel,
+      phoneVisible,
+      phoneRequired,
+      subjectLabel,
+      subjectVisible,
+      subjectRequired,
+      messageLabel
+    },
     seo
   }
 `)

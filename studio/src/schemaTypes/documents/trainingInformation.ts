@@ -6,6 +6,7 @@ export const trainingInformation = defineType({
   type: 'document',
   groups: [
     {name: 'content', title: 'Informação', default: true},
+    {name: 'form', title: 'Formulário de contacto'},
     {name: 'seo', title: 'SEO'},
   ],
   fields: [
@@ -24,6 +25,12 @@ export const trainingInformation = defineType({
       group: 'content',
       description:
         'Apresente informação geral. As datas, os destinatários e as inscrições pertencem a cada ação de formação.',
+    }),
+    defineField({
+      name: 'contactForm',
+      title: 'Formulário de contacto',
+      type: 'contactForm',
+      group: 'form',
     }),
     defineField({name: 'seo', title: 'SEO', type: 'seo', group: 'seo'}),
   ],
