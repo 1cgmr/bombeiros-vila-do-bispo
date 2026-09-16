@@ -79,7 +79,7 @@ O App Router implementa a navegação institucional completa em `web/src/app/`. 
 - `buildMetadata` aplica SEO editorial, `noIndex`, Open Graph e canonical quando existe um URL base válido.
 - `sitemap.ts` combina rotas fixas com slugs publicados; `robots.ts` bloqueia indexação em Vercel Preview.
 - A navegação é estrutural e permanece disponível mesmo quando o CMS está vazio.
-- A Associação tem subnavegação para Apresentação, Estatutos e Órgãos Sociais. A primeira pode mostrar a Mensagem do Presidente; as outras duas apresentam estados de preparação enquanto faltarem o PDF oficial ou a composição confirmada. Os dados publicados continuam a vir do Sanity.
+- A Associação tem subnavegação para Apresentação, Estatutos e Órgãos Sociais. A primeira pode mostrar a Mensagem do Presidente. Estatutos apresenta exemplos editoriais claramente identificados e um estado de preparação enquanto faltar o PDF oficial. Órgãos Sociais mostra registos confirmados e cartões de exemplo marcados como provisórios, sem pessoas. Os dados publicados continuam a vir do Sanity.
 
 As rotas de detalhe devolvem 404 para slugs inexistentes. A homepage esconde estatísticas, serviços, missão, notícias e contactos normais quando não existe informação publicada para essas áreas.
 

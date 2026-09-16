@@ -23,10 +23,19 @@ export const governingBody = defineType({
     }),
     defineField({
       name: 'title',
-      title: 'Designação oficial',
+      title: 'Designação',
       type: 'string',
+      description: 'Nos exemplos provisórios, a designação é ilustrativa e deve ser confirmada antes de apresentar a composição oficial.',
       validation: (rule) =>
-        rule.required().error('Indique a designação oficial.').max(160),
+        rule.required().error('Indique a designação do órgão.').max(160),
+    }),
+    defineField({
+      name: 'isPlaceholder',
+      title: 'Exemplo provisório',
+      type: 'boolean',
+      description: 'Assinale enquanto a existência, a designação ou a composição deste órgão não estiverem confirmadas. O site identifica-o como exemplo e não apresenta pessoas.',
+      initialValue: false,
+      hidden: ({document}) => document?.bodyType !== 'governingBody',
     }),
     defineField({
       name: 'mandateStart',
@@ -57,11 +66,15 @@ export const governingBody = defineType({
       type: 'array',
       description: 'Arraste os cargos para definir a ordem de apresentação.',
       of: [defineArrayMember({ type: 'governingRole' })],
+      hidden: ({document}) => document?.bodyType === 'governingBody' && document?.isPlaceholder === true,
       validation: (rule) =>
-        rule
-          .required()
-          .min(1)
-          .error('Adicione pelo menos um cargo e respetiva pessoa.'),
+        rule.custom((value, context) => {
+          const document = context.document as {bodyType?: string; isPlaceholder?: boolean}
+          if (document.bodyType === 'governingBody' && document.isPlaceholder) return true
+          return Array.isArray(value) && value.length > 0
+            ? true
+            : 'Adicione pelo menos um cargo e respetiva pessoa.'
+        }),
     }),
   ],
   orderings: [
@@ -75,10 +88,11 @@ export const governingBody = defineType({
     select: {
       title: 'title',
       type: 'bodyType',
+      placeholder: 'isPlaceholder',
       start: 'mandateStart',
       end: 'mandateEnd',
     },
-    prepare: ({ title, type, start, end }) => ({
+    prepare: ({ title, type, placeholder, start, end }) => ({
       title: title || 'Estrutura sem designação',
       subtitle: [
         type === 'command'
@@ -86,6 +100,7 @@ export const governingBody = defineType({
           : type === 'governingBody'
             ? 'Órgão social'
             : undefined,
+        placeholder ? 'Exemplo provisório' : undefined,
         start && end ? `${start} – ${end}` : start,
       ]
         .filter(Boolean)
