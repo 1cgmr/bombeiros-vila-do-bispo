@@ -22,18 +22,47 @@ const previousPlaceholders: Record<string, string[]> = {
   ],
 }
 
+const statutesExamples = [
+  {
+    _key: 'statutes-example-identification',
+    _type: 'statutesExample' as const,
+    title: 'Artigo 1.º — Denominação e sede',
+    text: 'A [designação oficial da Associação] tem sede em [morada aprovada] e rege-se pelos presentes estatutos e pela legislação aplicável.',
+  },
+  {
+    _key: 'statutes-example-purposes',
+    _type: 'statutesExample' as const,
+    title: 'Artigo 2.º — Fins',
+    text: 'A Associação tem por finalidade [indicar os fins aprovados]. Para a sua prossecução, poderá desenvolver [atividades previstas nos estatutos aprovados].',
+  },
+  {
+    _key: 'statutes-example-members',
+    _type: 'statutesExample' as const,
+    title: 'Artigo 3.º — Associados',
+    text: 'Podem adquirir a qualidade de associado [indicar as condições de admissão aprovadas]. Os direitos e deveres dos associados constam de [indicar os artigos aprovados].',
+  },
+  {
+    _key: 'statutes-example-bodies',
+    _type: 'statutesExample' as const,
+    title: 'Artigo 4.º — Órgãos sociais',
+    text: 'São órgãos da Associação [indicar os órgãos confirmados]. A composição, as competências e a duração dos mandatos são definidas em [indicar os artigos aprovados].',
+  },
+]
+
 const pages: Array<{
   _id: string
   _type: 'institutionalPage'
   title: string
   introduction: string
   body: ReturnType<typeof paragraph>[]
+  statutesExamples?: typeof statutesExamples
 }> = [
   {
     _id: 'institutional-page-statutes',
     _type: 'institutionalPage',
     title: 'Estatutos',
     introduction: 'O texto oficial dos estatutos será disponibilizado após validação pela Associação.',
+    statutesExamples,
     body: [
       paragraph('statutes-placeholder', 'A versão integral dos estatutos e uma apresentação dos seus pontos essenciais serão disponibilizadas nesta página depois da sua validação para publicação.'),
       paragraph('statutes-examples-title', 'Exemplos de secções a preencher', 'h2'),
@@ -112,10 +141,16 @@ async function main() {
     _id: string
     _rev: string
     body?: Array<{children?: Array<{text?: string}>}>
-  }>>('*[_id in $ids]{_id, _rev, body}', {ids: pages.map(({_id}) => _id)})
+    statutesExamples?: unknown[] | null
+  }>>('*[_id in $ids]{_id, _rev, body, statutesExamples}', {ids: pages.map(({_id}) => _id)})
   const placeholdersToUpdate = publishedPages.filter((page) =>
     page.body?.length === 1 &&
     previousPlaceholders[page._id]?.includes(page.body[0]?.children?.[0]?.text ?? '') &&
+    !existingIds.includes(`drafts.${page._id}`),
+  )
+  const examplesToAdd = publishedPages.filter((page) =>
+    page._id === 'institutional-page-statutes' &&
+    page.statutesExamples == null &&
     !existingIds.includes(`drafts.${page._id}`),
   )
   const existingStatutesCount = await client.fetch<number>(
@@ -127,19 +162,26 @@ async function main() {
   console.log(`Modo: ${isApply ? 'APLICAR' : 'SIMULAÇÃO'}`)
   console.log(`Páginas provisórias a criar: ${pagesToCreate.map(({title}) => title).join(', ') || 'nenhuma'}`)
   console.log(`Textos provisórios anteriores a atualizar: ${placeholdersToUpdate.length}`)
+  console.log(`Páginas de Estatutos a receber exemplos de artigos: ${examplesToAdd.length}`)
   console.log(`Órgãos sociais de exemplo a criar: ${examplesToCreate.map(({title}) => title).join(', ') || 'nenhum'}`)
   console.log(`Exemplo de documento em rascunho: ${createDraft ? 'criar' : 'já existe conteúdo de Estatutos'}`)
 
-  if (!isApply || (!pagesToCreate.length && !createDraft && !placeholdersToUpdate.length && !examplesToCreate.length)) return
+  if (!isApply || (!pagesToCreate.length && !createDraft && !placeholdersToUpdate.length && !examplesToAdd.length && !examplesToCreate.length)) return
 
   let transaction = client.transaction()
   for (const page of pagesToCreate) transaction = transaction.createIfNotExists(page)
   for (const example of examplesToCreate) transaction = transaction.createIfNotExists(example)
-  for (const existing of placeholdersToUpdate) {
+  for (const existing of publishedPages.filter((page) =>
+    placeholdersToUpdate.includes(page) || examplesToAdd.includes(page),
+  )) {
     const page = pages.find(({_id}) => _id === existing._id)
     if (page) {
+      const updates = {
+        ...(placeholdersToUpdate.includes(existing) ? {body: page.body} : {}),
+        ...(examplesToAdd.includes(existing) ? {statutesExamples} : {}),
+      }
       transaction = transaction.patch(existing._id, (patch) =>
-        patch.ifRevisionId(existing._rev).set({body: page.body}),
+        patch.ifRevisionId(existing._rev).set(updates),
       )
     }
   }

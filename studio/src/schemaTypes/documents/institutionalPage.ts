@@ -64,6 +64,41 @@ export const institutionalPage = defineType({
         document?._id !== 'drafts.institutional-page-association',
     }),
     defineField({
+      name: 'statutesExamples',
+      title: 'Exemplos de artigos dos Estatutos',
+      type: 'array',
+      group: 'content',
+      description: 'Modelos provisórios apresentados quando ainda não há um PDF oficial associado. Substitua ou remova estes exemplos após validação dos Estatutos.',
+      hidden: ({document}) =>
+        document?._id !== 'institutional-page-statutes' &&
+        document?._id !== 'drafts.institutional-page-statutes',
+      of: [
+        defineArrayMember({
+          name: 'statutesExample',
+          title: 'Artigo de exemplo',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Título do artigo',
+              type: 'string',
+              validation: (rule) => rule.required().max(160),
+            }),
+            defineField({
+              name: 'text',
+              title: 'Texto de exemplo',
+              type: 'text',
+              rows: 4,
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: {title: 'title', subtitle: 'text'},
+          },
+        }),
+      ],
+    }),
+    defineField({
       name: 'documents',
       title: 'Documentos relacionados',
       type: 'array',

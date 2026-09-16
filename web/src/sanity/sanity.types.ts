@@ -334,6 +334,12 @@ export type InstitutionalPage = {
   featuredImage?: AccessibleImage;
   body: PortableText;
   presidentMessage?: PortableText;
+  statutesExamples?: Array<{
+    title: string;
+    text: string;
+    _type: "statutesExample";
+    _key: string;
+  }>;
   documents?: Array<
     {
       _key: string;
@@ -1104,7 +1110,7 @@ export type INSTITUTIONAL_DOCUMENTS_QUERY_RESULT = Array<{
 
 // Source: ../web/src/sanity/queries/institutional-pages.ts
 // Variable: INSTITUTIONAL_PAGE_QUERY
-// Query: *[_type == "institutionalPage" && _id == $documentId][0]{    _id,    title,    introduction,    featuredImage{      asset->{_id, url, metadata{dimensions, lqip}},      alt,      decorative,      caption,      credit,      crop,      hotspot    },    body,    presidentMessage,    documents[]->{      _id,      title,      category,      date,      reference,      accessibleSummary,      "file": file.asset->{_id, url, originalFilename, mimeType, size}    },    seo  }
+// Query: *[_type == "institutionalPage" && _id == $documentId][0]{    _id,    title,    introduction,    featuredImage{      asset->{_id, url, metadata{dimensions, lqip}},      alt,      decorative,      caption,      credit,      crop,      hotspot    },    body,    presidentMessage,    statutesExamples[]{_key, title, text},    documents[]->{      _id,      title,      category,      date,      reference,      accessibleSummary,      "file": file.asset->{_id, url, originalFilename, mimeType, size}    },    seo  }
 export type INSTITUTIONAL_PAGE_QUERY_RESULT = {
   _id: string;
   title: string;
@@ -1127,6 +1133,11 @@ export type INSTITUTIONAL_PAGE_QUERY_RESULT = {
   } | null;
   body: PortableText;
   presidentMessage: PortableText | null;
+  statutesExamples: Array<{
+    _key: string;
+    title: string;
+    text: string;
+  }> | null;
   documents: Array<{
     _id: string;
     title: string;
@@ -1609,7 +1620,7 @@ declare global {
     '\n  *[_type == "person"] | order(publicName asc){\n    _id,\n    publicName,\n    photograph{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    biography,\n    publicContactChannels[authorizedForPublication == true]{\n      _key,\n      label,\n      channelType,\n      value,\n      description\n    }\n  }\n': PEOPLE_QUERY_RESULT;
     '\n  *[_type == "homepage" && _id == "homepage"][0]{\n    _id,\n    _type,\n    hero{\n      headline,\n      highlightedFragment,\n      description,\n      image{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      },\n      emergencyCta,\n      recruitmentCta,\n      supportCta\n    },\n    statistics[confirmedForPublication == true]{\n      _key,\n      kind,\n      label,\n      value,\n      suffix,\n      asOfDate\n    },\n    mission{\n      sectionLabel,\n      title,\n      body,\n      image{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      }\n    },\n    featuredServices[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      summary,\n      visualType,\n      image{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      },\n      icon\n    },\n    latestNews{sectionLabel, title, itemCount},\n    supportSection{sectionLabel, title, description, cta},\n    seo\n  }\n': HOMEPAGE_QUERY_RESULT;
     '\n  *[_type == "institutionalDocument"] | order(date desc, title asc){\n    _id,\n    title,\n    category,\n    date,\n    reference,\n    accessibleSummary,\n    "file": file.asset->{_id, url, originalFilename, mimeType, size}\n  }\n': INSTITUTIONAL_DOCUMENTS_QUERY_RESULT;
-    '\n  *[_type == "institutionalPage" && _id == $documentId][0]{\n    _id,\n    title,\n    introduction,\n    featuredImage{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    body,\n    presidentMessage,\n    documents[]->{\n      _id,\n      title,\n      category,\n      date,\n      reference,\n      accessibleSummary,\n      "file": file.asset->{_id, url, originalFilename, mimeType, size}\n    },\n    seo\n  }\n': INSTITUTIONAL_PAGE_QUERY_RESULT;
+    '\n  *[_type == "institutionalPage" && _id == $documentId][0]{\n    _id,\n    title,\n    introduction,\n    featuredImage{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    body,\n    presidentMessage,\n    statutesExamples[]{_key, title, text},\n    documents[]->{\n      _id,\n      title,\n      category,\n      date,\n      reference,\n      accessibleSummary,\n      "file": file.asset->{_id, url, originalFilename, mimeType, size}\n    },\n    seo\n  }\n': INSTITUTIONAL_PAGE_QUERY_RESULT;
     '\n  *[_type == "membershipInformation" && _id == "membershipInformation"][0]{\n    _id,\n    introduction,\n    eligibility,\n    benefits,\n    process[]{_key, title, description},\n    "fees": select(feesConfirmedForPublication == true => fees),\n    faq[]{_key, question, answer},\n    futureFormIntroduction,\n    seo\n  }\n': MEMBERSHIP_INFORMATION_QUERY_RESULT;
     '\n  *[_type == "newsArticle" && publicationDate <= now()]\n    | order(publicationDate desc) [0...$limit]{\n      _id,\n      title,\n      "slug": slug.current,\n      excerpt,\n      publicationDate,\n      fallbackVisual,\n      mainImage{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      },\n      categories[]->{_id, name, "slug": slug.current}\n    }\n': NEWS_ARTICLES_QUERY_RESULT;
     '\n  *[_type == "newsArticle" && slug.current == $slug && publicationDate <= now()][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    publicationDate,\n    fallbackVisual,\n    mainImage{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    body,\n    categories[]->{_id, name, "slug": slug.current},\n    author->{\n      _id,\n      publicName,\n      photograph{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      }\n    },\n    seo\n  }\n': NEWS_ARTICLE_BY_SLUG_QUERY_RESULT;

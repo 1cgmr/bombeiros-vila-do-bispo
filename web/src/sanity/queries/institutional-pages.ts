@@ -29,6 +29,7 @@ export const INSTITUTIONAL_PAGE_QUERY = defineQuery(`
     },
     body,
     presidentMessage,
+    statutesExamples[]{_key, title, text},
     documents[]->{
       _id,
       title,
