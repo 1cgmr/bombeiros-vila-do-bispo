@@ -41,7 +41,7 @@ Os IDs fixos usam hífen e não ponto. No Sanity, qualquer ID que contenha ponto
 
 Campos: título, introdução, imagem acessível, Portable Text controlado, referências ordenadas a documentos institucionais e SEO. A apresentação da Associação tem ainda o campo exclusivo «Mensagem do Presidente», que pode ficar vazio até existir texto aprovado. Na página Estatutos, os PDFs oficiais são associados através de referências a `institutionalDocument` com a categoria `statutes`. A composição dos órgãos sociais é editada nos documentos `governingBody` com o tipo `governingBody`, organizados no menu Associação. Estes documentos usam as mesmas proteções de ações dos singletons.
 
-O script `studio/scripts/add-association-sections.ts` cria, apenas quando faltam, apresentações provisórias para Estatutos e Órgãos Sociais e um exemplo de documento de Estatutos em rascunho, sem PDF. Executa-se em `studio/` com `npm run content:association:dry-run` e `npm run content:association:apply`. O exemplo de documento só pode ser publicado depois de ser substituído pelo título, resumo e PDF oficiais. A mensagem do Presidente continua vazia até existir texto aprovado.
+O script `studio/scripts/add-association-sections.ts` cria, apenas quando faltam, apresentações provisórias para Estatutos e Órgãos Sociais, três secções ilustrativas dos Estatutos, dois órgãos sociais de exemplo e um documento de Estatutos em rascunho, sem PDF. Só acrescenta as secções à página publicada de Estatutos se esta conservar exatamente o parágrafo provisório inicial e não tiver rascunho. Executa-se em `studio/` com `npm run content:association:dry-run` e `npm run content:association:apply`. O documento de exemplo só pode ser publicado depois de ser substituído pelo título, resumo e PDF oficiais. A mensagem do Presidente continua vazia até existir texto aprovado.
 
 ## Coleções
 
@@ -55,7 +55,7 @@ O script `studio/scripts/add-association-sections.ts` cria, apenas quando faltam
 | `gallery` | Álbuns fotográficos | Título, slug, data, descrição, capa, imagens ordenadas e SEO. |
 | `institutionalDocument` | PDFs oficiais | Título, categoria, ficheiro PDF, data, referência e resumo acessível em Portable Text. Pode ser referenciado por páginas e pelo editor de texto. |
 | `person` | Pessoas apresentadas publicamente | Nome autorizado, fotografia, biografia e contactos profissionais expressamente autorizados. |
-| `governingBody` | Comando e órgãos sociais | Tipo, designação, datas de mandato, descrição e cargos ordenados. Cada cargo referencia `person`. |
+| `governingBody` | Comando e órgãos sociais | Tipo, designação, datas de mandato, descrição e cargos ordenados. Cada cargo confirmado referencia `person`. Os órgãos sociais podem ser marcados como exemplos provisórios, apresentados sem pessoas até validação oficial. |
 | `partner` | Parceiros públicos | Nome, logótipo, website HTTPS, descrição, ordem e estado de visibilidade. |
 
 ## Objetos reutilizáveis
@@ -96,6 +96,7 @@ As relações são unidirecionais. Não existem referências inversas redundante
 ## Validação e integridade
 
 - Títulos essenciais e slugs são obrigatórios; o campo slug aplica a verificação de unicidade do Sanity dentro do respetivo tipo.
+- Órgãos sociais confirmados e elementos do Comando exigem pelo menos um cargo com pessoa; exemplos provisórios de órgãos sociais podem ficar sem cargos e são identificados como tal no site.
 - URLs públicas externas aceitam apenas HTTPS. Ligações no texto aceitam caminhos internos, HTTPS, `mailto:` e `tel:` validados.
 - Emails e telefones usam validação adequada sem impor um formato visual único.
 - Datas finais não podem anteceder datas iniciais; datas futuras de notícias geram aviso de agendamento.

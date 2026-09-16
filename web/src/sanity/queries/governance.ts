@@ -6,6 +6,7 @@ export const GOVERNING_BODIES_QUERY = defineQuery(`
   *[_type == "governingBody" && bodyType == $bodyType] | order(mandateStart desc, title asc){
     _id,
     bodyType,
+    isPlaceholder,
     title,
     mandateStart,
     mandateEnd,

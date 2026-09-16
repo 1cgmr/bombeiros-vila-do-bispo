@@ -56,10 +56,11 @@ export type GoverningBody = {
   _rev: string;
   bodyType: "command" | "governingBody";
   title: string;
+  isPlaceholder?: boolean;
   mandateStart?: string;
   mandateEnd?: string;
   description?: PortableText;
-  roles: Array<
+  roles?: Array<
     {
       _key: string;
     } & GoverningRole
@@ -900,10 +901,11 @@ export type GALLERY_BY_SLUG_QUERY_RESULT = {
 
 // Source: ../web/src/sanity/queries/governance.ts
 // Variable: GOVERNING_BODIES_QUERY
-// Query: *[_type == "governingBody" && bodyType == $bodyType] | order(mandateStart desc, title asc){    _id,    bodyType,    title,    mandateStart,    mandateEnd,    description,    roles[]{      _key,      roleTitle,      publicNote,      person->{        _id,        publicName,        photograph{          asset->{_id, url, metadata{dimensions, lqip}},          alt,          decorative,          caption,          credit,          crop,          hotspot        },        biography,        publicContactChannels[authorizedForPublication == true]{          _key,          label,          channelType,          value,          description        }      }    }  }
+// Query: *[_type == "governingBody" && bodyType == $bodyType] | order(mandateStart desc, title asc){    _id,    bodyType,    isPlaceholder,    title,    mandateStart,    mandateEnd,    description,    roles[]{      _key,      roleTitle,      publicNote,      person->{        _id,        publicName,        photograph{          asset->{_id, url, metadata{dimensions, lqip}},          alt,          decorative,          caption,          credit,          crop,          hotspot        },        biography,        publicContactChannels[authorizedForPublication == true]{          _key,          label,          channelType,          value,          description        }      }    }  }
 export type GOVERNING_BODIES_QUERY_RESULT = Array<{
   _id: string;
   bodyType: "command" | "governingBody";
+  isPlaceholder: boolean | null;
   title: string;
   mandateStart: string | null;
   mandateEnd: string | null;
@@ -940,7 +942,7 @@ export type GOVERNING_BODIES_QUERY_RESULT = Array<{
         description: string | null;
       }> | null;
     };
-  }>;
+  }> | null;
 }>;
 
 // Source: ../web/src/sanity/queries/governance.ts
@@ -1603,7 +1605,7 @@ declare global {
     '\n  *[_type == "donationInformation" && _id == "donationInformation"][0]{\n    _id,\n    introduction,\n    waysToContribute,\n    donationMethods[confirmedForPublication == true]{\n      _key,\n      methodType,\n      title,\n      description,\n      iban,\n      mbWayNumber,\n      externalUrl\n    },\n    seo\n  }\n': DONATION_INFORMATION_QUERY_RESULT;
     '\n  *[_type == "gallery"] | order(date desc, title asc){\n    _id,\n    title,\n    "slug": slug.current,\n    date,\n    coverImage{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    }\n  }\n': GALLERIES_QUERY_RESULT;
     '\n  *[_type == "gallery" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    date,\n    description,\n    coverImage{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    items[]{\n      _key,\n      image{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      }\n    },\n    seo\n  }\n': GALLERY_BY_SLUG_QUERY_RESULT;
-    '\n  *[_type == "governingBody" && bodyType == $bodyType] | order(mandateStart desc, title asc){\n    _id,\n    bodyType,\n    title,\n    mandateStart,\n    mandateEnd,\n    description,\n    roles[]{\n      _key,\n      roleTitle,\n      publicNote,\n      person->{\n        _id,\n        publicName,\n        photograph{\n          asset->{_id, url, metadata{dimensions, lqip}},\n          alt,\n          decorative,\n          caption,\n          credit,\n          crop,\n          hotspot\n        },\n        biography,\n        publicContactChannels[authorizedForPublication == true]{\n          _key,\n          label,\n          channelType,\n          value,\n          description\n        }\n      }\n    }\n  }\n': GOVERNING_BODIES_QUERY_RESULT;
+    '\n  *[_type == "governingBody" && bodyType == $bodyType] | order(mandateStart desc, title asc){\n    _id,\n    bodyType,\n    isPlaceholder,\n    title,\n    mandateStart,\n    mandateEnd,\n    description,\n    roles[]{\n      _key,\n      roleTitle,\n      publicNote,\n      person->{\n        _id,\n        publicName,\n        photograph{\n          asset->{_id, url, metadata{dimensions, lqip}},\n          alt,\n          decorative,\n          caption,\n          credit,\n          crop,\n          hotspot\n        },\n        biography,\n        publicContactChannels[authorizedForPublication == true]{\n          _key,\n          label,\n          channelType,\n          value,\n          description\n        }\n      }\n    }\n  }\n': GOVERNING_BODIES_QUERY_RESULT;
     '\n  *[_type == "person"] | order(publicName asc){\n    _id,\n    publicName,\n    photograph{\n      asset->{_id, url, metadata{dimensions, lqip}},\n      alt,\n      decorative,\n      caption,\n      credit,\n      crop,\n      hotspot\n    },\n    biography,\n    publicContactChannels[authorizedForPublication == true]{\n      _key,\n      label,\n      channelType,\n      value,\n      description\n    }\n  }\n': PEOPLE_QUERY_RESULT;
     '\n  *[_type == "homepage" && _id == "homepage"][0]{\n    _id,\n    _type,\n    hero{\n      headline,\n      highlightedFragment,\n      description,\n      image{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      },\n      emergencyCta,\n      recruitmentCta,\n      supportCta\n    },\n    statistics[confirmedForPublication == true]{\n      _key,\n      kind,\n      label,\n      value,\n      suffix,\n      asOfDate\n    },\n    mission{\n      sectionLabel,\n      title,\n      body,\n      image{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      }\n    },\n    featuredServices[]->{\n      _id,\n      title,\n      "slug": slug.current,\n      summary,\n      visualType,\n      image{\n        asset->{_id, url, metadata{dimensions, lqip}},\n        alt,\n        decorative,\n        caption,\n        credit,\n        crop,\n        hotspot\n      },\n      icon\n    },\n    latestNews{sectionLabel, title, itemCount},\n    supportSection{sectionLabel, title, description, cta},\n    seo\n  }\n': HOMEPAGE_QUERY_RESULT;
     '\n  *[_type == "institutionalDocument"] | order(date desc, title asc){\n    _id,\n    title,\n    category,\n    date,\n    reference,\n    accessibleSummary,\n    "file": file.asset->{_id, url, originalFilename, mimeType, size}\n  }\n': INSTITUTIONAL_DOCUMENTS_QUERY_RESULT;
