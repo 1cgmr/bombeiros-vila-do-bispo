@@ -5,6 +5,7 @@ Todos os itens permanecem **pendentes de confirmação oficial** pela Direção/
 - [ ] Nome oficial e nome curto aprovados
 - [ ] Logótipo oficial, ficheiro de qualidade e normas de utilização
 - [ ] História, missão, valores e datas institucionais
+- [ ] Mensagem do Presidente aprovada para publicação
 - [ ] Composição dos órgãos sociais e do comando
 - [ ] Números do efetivo, viaturas, disponibilidade e outras estatísticas
 - [ ] Frota, equipamentos, especialidades e serviços

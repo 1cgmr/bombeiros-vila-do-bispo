@@ -16,6 +16,8 @@
     "content:initial:apply": "sanity exec scripts/populate-initial-content.ts --with-user-token -- --apply",
     "content:polish:dry-run": "sanity exec scripts/apply-content-polish.ts --with-user-token -- --dry-run",
     "content:polish:apply": "sanity exec scripts/apply-content-polish.ts --with-user-token -- --apply",
+    "content:association:dry-run": "sanity exec scripts/add-association-sections.ts --with-user-token -- --dry-run",
+    "content:association:apply": "sanity exec scripts/add-association-sections.ts --with-user-token -- --apply",
     "schema:extract": "sanity schema extract --path .sanity/schema.json --enforce-required-fields --force",
     "schema:validate": "npm run schema:extract",
     "typegen": "npm run schema:extract && sanity typegen generate",

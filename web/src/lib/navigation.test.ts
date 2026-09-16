@@ -1,6 +1,6 @@
 import {describe, expect, it} from 'vitest'
 
-import {primaryNavigation} from './navigation'
+import {footerNavigation, primaryNavigation} from './navigation'
 
 describe('primaryNavigation', () => {
   it('exposes every approved primary route exactly once', () => {
@@ -18,5 +18,16 @@ describe('primaryNavigation', () => {
       '/galeria',
       '/contactos',
     ])
+  })
+
+  it('makes both Association subpages reachable from the menu and footer', () => {
+    const association = primaryNavigation.find((item) => item.href === '/associacao')
+    expect(association && 'children' in association ? association.children.map((item) => item.href) : []).toEqual([
+      '/associacao',
+      '/associacao/estatutos',
+      '/associacao/orgaos-sociais',
+    ])
+    expect(footerNavigation.map((item) => item.href)).toContain('/associacao/estatutos')
+    expect(footerNavigation.map((item) => item.href)).toContain('/associacao/orgaos-sociais')
   })
 })

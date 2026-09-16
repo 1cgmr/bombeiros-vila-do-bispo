@@ -3,7 +3,7 @@ import {defineQuery} from 'groq'
 import {sanityClient} from '../client'
 
 export const GOVERNING_BODIES_QUERY = defineQuery(`
-  *[_type == "governingBody"] | order(mandateStart desc, title asc){
+  *[_type == "governingBody" && bodyType == $bodyType] | order(mandateStart desc, title asc){
     _id,
     bodyType,
     title,
@@ -63,8 +63,8 @@ export const PEOPLE_QUERY = defineQuery(`
   }
 `)
 
-export function getGoverningBodies() {
-  return sanityClient.fetch(GOVERNING_BODIES_QUERY)
+export function getGoverningBodies(bodyType: 'command' | 'governingBody') {
+  return sanityClient.fetch(GOVERNING_BODIES_QUERY, {bodyType})
 }
 
 export function getPeople() {

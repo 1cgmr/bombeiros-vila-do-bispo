@@ -38,6 +38,31 @@ export const structure: StructureResolver = (S) => {
                 institutionalPageIds.association,
               ),
               fixedDocument(
+                'Estatutos',
+                'institutionalPage',
+                institutionalPageIds.statutes,
+              ),
+              fixedDocument(
+                'Órgãos Sociais — apresentação',
+                'institutionalPage',
+                institutionalPageIds.socialBodies,
+              ),
+              S.listItem()
+                .id('governingBodies')
+                .title('Órgãos Sociais — composição')
+                .schemaType('governingBody')
+                .child(
+                  S.documentTypeList('governingBody')
+                    .id('governingBodyDocuments')
+                    .title('Órgãos Sociais — composição')
+                    .filter('_type == "governingBody" && bodyType == "governingBody"')
+                    .apiVersion('2026-09-01')
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem('social-governing-body'),
+                    ]),
+                ),
+              S.documentTypeListItem('person').title('Pessoas'),
+              fixedDocument(
                 'Política de Privacidade',
                 'institutionalPage',
                 institutionalPageIds.privacyPolicy,
@@ -73,22 +98,6 @@ export const structure: StructureResolver = (S) => {
                     .apiVersion('2026-09-01')
                     .initialValueTemplates([
                       S.initialValueTemplateItem('command-governing-body'),
-                    ]),
-                ),
-              S.listItem()
-                .id('governingBodies')
-                .title('Órgãos Sociais')
-                .schemaType('governingBody')
-                .child(
-                  S.documentTypeList('governingBody')
-                    .id('governingBodyDocuments')
-                    .title('Órgãos Sociais')
-                    .filter(
-                      '_type == "governingBody" && bodyType == "governingBody"',
-                    )
-                    .apiVersion('2026-09-01')
-                    .initialValueTemplates([
-                      S.initialValueTemplateItem('social-governing-body'),
                     ]),
                 ),
               S.documentTypeListItem('person').title('Pessoas'),

@@ -24,7 +24,24 @@ export function SiteHeader({name, shortName, logo}: {name: string; shortName?: s
 
         <nav aria-label="Navegação principal" className="hidden 2xl:block">
           <ul className="flex items-center gap-0.5">
-            {primaryNavigation.map((item) => <li key={item.href}><Link className="block whitespace-nowrap rounded-sm px-2.5 py-3 text-[0.74rem] font-bold uppercase leading-none tracking-[0.025em] text-white/90 transition hover:bg-white/8 hover:text-brand-gold-light focus-visible:outline-2 focus-visible:outline-brand-gold" href={item.href}>{item.label}</Link></li>)}
+            {primaryNavigation.map((item) => (
+              <li key={item.href}>
+                {'children' in item ? (
+                  <details className="group relative">
+                    <summary className="flex cursor-pointer list-none items-center gap-1 whitespace-nowrap rounded-sm px-2.5 py-3 text-[0.74rem] font-bold uppercase leading-none tracking-[0.025em] text-white/90 transition hover:bg-white/8 hover:text-brand-gold-light focus-visible:outline-2 focus-visible:outline-brand-gold [&::-webkit-details-marker]:hidden">
+                      {item.label}<Icon className="h-3 w-3 rotate-90 transition group-open:-rotate-90" name="arrow" />
+                    </summary>
+                    <ul className="absolute left-0 top-full z-50 min-w-52 rounded-sm border border-white/10 bg-brand-navy-dark py-2 shadow-2xl">
+                      {item.children.map((child) => (
+                        <li key={child.href}><Link className="block px-4 py-3 text-sm font-semibold text-white transition hover:bg-white/8 hover:text-brand-gold-light focus-visible:outline-2 focus-visible:outline-brand-gold" href={child.href}>{child.label}</Link></li>
+                      ))}
+                    </ul>
+                  </details>
+                ) : (
+                  <Link className="block whitespace-nowrap rounded-sm px-2.5 py-3 text-[0.74rem] font-bold uppercase leading-none tracking-[0.025em] text-white/90 transition hover:bg-white/8 hover:text-brand-gold-light focus-visible:outline-2 focus-visible:outline-brand-gold" href={item.href}>{item.label}</Link>
+                )}
+              </li>
+            ))}
           </ul>
         </nav>
 

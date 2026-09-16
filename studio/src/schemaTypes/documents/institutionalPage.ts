@@ -1,5 +1,14 @@
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
+const pageLabels: Record<string, string> = {
+  'institutional-page-association': 'Associação',
+  'institutional-page-statutes': 'Estatutos',
+  'institutional-page-social-bodies': 'Órgãos Sociais',
+  'institutional-page-fire-brigade': 'Corpo de Bombeiros',
+  'institutional-page-privacy-policy': 'Política de Privacidade',
+  'institutional-page-accessibility-statement': 'Declaração de Acessibilidade',
+}
+
 export const institutionalPage = defineType({
   name: 'institutionalPage',
   title: 'Página Institucional',
@@ -45,10 +54,21 @@ export const institutionalPage = defineType({
           .error('Introduza o conteúdo institucional da página.'),
     }),
     defineField({
+      name: 'presidentMessage',
+      title: 'Mensagem do Presidente',
+      type: 'portableText',
+      group: 'content',
+      description: 'Publique apenas o texto aprovado pelo Presidente. Deixe vazio enquanto estiver em preparação.',
+      hidden: ({document}) =>
+        document?._id !== 'institutional-page-association' &&
+        document?._id !== 'drafts.institutional-page-association',
+    }),
+    defineField({
       name: 'documents',
       title: 'Documentos relacionados',
       type: 'array',
       group: 'documents',
+      description: 'Na página Estatutos, associe aqui apenas PDFs oficiais da categoria Estatutos, depois de os criar em Documentos.',
       of: [
         defineArrayMember({
           type: 'reference',
@@ -63,16 +83,7 @@ export const institutionalPage = defineType({
     select: { title: 'title', subtitle: '_id', media: 'featuredImage' },
     prepare: ({ title, subtitle, media }) => ({
       title: title || 'Página institucional sem título',
-      subtitle:
-        subtitle === 'institutional-page-association'
-          ? 'Associação'
-          : subtitle === 'institutional-page-fire-brigade'
-            ? 'Corpo de Bombeiros'
-            : subtitle === 'institutional-page-privacy-policy'
-              ? 'Política de Privacidade'
-              : subtitle === 'institutional-page-accessibility-statement'
-                ? 'Declaração de Acessibilidade'
-                : 'Página institucional controlada',
+      subtitle: pageLabels[subtitle?.replace(/^drafts\./, '') ?? ''] ?? 'Página institucional controlada',
       media,
     }),
   },
