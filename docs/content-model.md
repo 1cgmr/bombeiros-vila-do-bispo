@@ -26,18 +26,22 @@ Abrir uma entrada fixa no Studio apresenta o formulário associado ao ID estáve
 
 ## Páginas institucionais controladas
 
-`institutionalPage` não é uma coleção de páginas livres. O Studio expõe apenas quatro documentos fixos:
+`institutionalPage` não é uma coleção de páginas livres. O Studio expõe seis documentos fixos:
 
 | ID estável | Navegação editorial |
 | --- | --- |
 | `institutional-page-association` | Associação → Apresentação |
+| `institutional-page-statutes` | Associação → Estatutos |
+| `institutional-page-social-bodies` | Associação → Órgãos Sociais → apresentação |
 | `institutional-page-fire-brigade` | Corpo de Bombeiros → Apresentação |
 | `institutional-page-privacy-policy` | Associação → Política de Privacidade |
 | `institutional-page-accessibility-statement` | Associação → Declaração de Acessibilidade |
 
 Os IDs fixos usam hífen e não ponto. No Sanity, qualquer ID que contenha ponto pertence a um subcaminho privado e não pode ser consultado anonimamente, mesmo num dataset público. Esta convenção mantém as páginas institucionais acessíveis ao frontend sem token.
 
-Campos: título, introdução, imagem acessível, Portable Text controlado, referências ordenadas a documentos institucionais e SEO. Estes documentos usam as mesmas proteções de ações dos singletons.
+Campos: título, introdução, imagem acessível, Portable Text controlado, referências ordenadas a documentos institucionais e SEO. A apresentação da Associação tem ainda o campo exclusivo «Mensagem do Presidente», que pode ficar vazio até existir texto aprovado. Na página Estatutos, os PDFs oficiais são associados através de referências a `institutionalDocument` com a categoria `statutes`. A composição dos órgãos sociais é editada nos documentos `governingBody` com o tipo `governingBody`, organizados no menu Associação. Estes documentos usam as mesmas proteções de ações dos singletons.
+
+O script `studio/scripts/add-association-sections.ts` cria, apenas quando faltam, apresentações provisórias para Estatutos e Órgãos Sociais e um exemplo de documento de Estatutos em rascunho, sem PDF. Executa-se em `studio/` com `npm run content:association:dry-run` e `npm run content:association:apply`. O exemplo de documento só pode ser publicado depois de ser substituído pelo título, resumo e PDF oficiais. A mensagem do Presidente continua vazia até existir texto aprovado.
 
 ## Coleções
 
@@ -106,6 +110,6 @@ As relações são unidirecionais. Não existem referências inversas redundante
 
 - `generalEmail` e `generalPhone` deixam de pertencer a `siteSettings`; a fonte única desses dados passa a ser `contactInformation`.
 - O logótipo usa agora `accessibleImage`, mantendo compatibilidade estrutural com o tipo de imagem do Sanity e acrescentando requisitos de acessibilidade.
-- Os quatro conteúdos institucionais usam um único schema controlado com IDs fixos, evitando páginas arbitrárias e schemas quase idênticos.
+- Os seis conteúdos institucionais usam um único schema controlado com IDs fixos, evitando páginas arbitrárias e schemas quase idênticos.
 - As secções específicas da página inicial são objetos embebidos, não componentes livres de page builder.
 - Não foram adicionados tipos específicos para “etapa de recrutamento”, “etapa de sócio” ou “especificação de viatura”; são objetos locais porque não têm ciclo de vida próprio.

@@ -7,7 +7,7 @@ import {getServices} from '@/sanity/queries/services'
 import {getSiteSettings} from '@/sanity/queries/site-settings'
 import {getTraining} from '@/sanity/queries/training'
 
-const staticPaths = ['/', '/associacao', '/corpo-de-bombeiros', '/servicos', '/formacao', '/recrutamento', '/noticias', '/socios-e-apoio', '/galeria', '/documentos', '/contactos', '/privacidade', '/acessibilidade']
+const staticPaths = ['/', '/associacao', '/associacao/estatutos', '/associacao/orgaos-sociais', '/corpo-de-bombeiros', '/servicos', '/formacao', '/recrutamento', '/noticias', '/socios-e-apoio', '/galeria', '/documentos', '/contactos', '/privacidade', '/acessibilidade']
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [settings, services, articles, training, galleries] = await Promise.all([getSiteSettings(), getServices(), getNewsArticles(100), getTraining(), getGalleries()])

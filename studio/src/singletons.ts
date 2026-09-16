@@ -21,6 +21,8 @@ export const singletonActions = new Set([
 
 export const institutionalPageIds = {
   association: 'institutional-page-association',
+  statutes: 'institutional-page-statutes',
+  socialBodies: 'institutional-page-social-bodies',
   fireBrigade: 'institutional-page-fire-brigade',
   privacyPolicy: 'institutional-page-privacy-policy',
   accessibilityStatement: 'institutional-page-accessibility-statement',
