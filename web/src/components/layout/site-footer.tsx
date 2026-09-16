@@ -16,8 +16,8 @@ export function SiteFooter({name, logo, address, email, telephone, socialLinks}:
       <div className="border-b border-white/10">
         <div className="container-site grid gap-10 py-14 md:grid-cols-[1.1fr_1.5fr_1fr]">
           <div>
-            <div className="flex items-center gap-3">
-              {logo?.asset?.url ? <SanityImage className="h-16 w-16 object-contain" height={128} image={logo} sizes="64px" width={128} /> : <span aria-hidden="true" className="grid h-14 w-14 place-items-center border-2 border-brand-gold text-xs font-black text-brand-gold">BV</span>}
+            <div className="flex flex-wrap items-center gap-3">
+              {logo?.asset?.url ? <SanityImage className="h-16 w-48 shrink-0 object-contain" fit="max" height={128} image={logo} sizes="192px" width={384} /> : <span aria-hidden="true" className="grid h-14 w-14 place-items-center border-2 border-brand-gold text-xs font-black text-brand-gold">BV</span>}
               <p className="max-w-64 font-black uppercase leading-tight tracking-wide">{name}</p>
             </div>
             <a className="mt-6 inline-flex min-h-11 items-center gap-3 rounded-sm bg-emergency-red px-4 py-2 font-bold transition hover:bg-emergency-red-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" href="tel:112"><Icon className="h-5 w-5" name="phone" /><span>Em caso de emergência, ligue 112</span></a>

@@ -18,6 +18,7 @@ export function SanityImage({
   className = '',
   sizes,
   priority = false,
+  fit = 'crop',
   width = 1200,
   height = 800,
 }: {
@@ -25,12 +26,14 @@ export function SanityImage({
   className?: string
   sizes: string
   priority?: boolean
+  fit?: 'crop' | 'max'
   width?: number
   height?: number
 }) {
   if (!image?.asset?.url) return null
 
-  const src = urlForImage(image as SanityImageSource).width(width).height(height).quality(84).url()
+  const imageUrl = urlForImage(image as SanityImageSource).width(width).quality(84)
+  const src = fit === 'max' ? imageUrl.fit('max').url() : imageUrl.height(height).fit('crop').url()
   const decorative = Boolean(image.decorative)
   const alt = decorative ? '' : image.alt?.trim() || ''
 
